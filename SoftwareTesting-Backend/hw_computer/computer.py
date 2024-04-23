@@ -7,18 +7,18 @@ max_peripheral_num = 90
 
 
 def computer(host: int, monitor: int, peripheral: int):
-    if host < 0:
-        return "host can't be negative"
+    if host <= 0:
+        return "host must be positive"
     elif host > max_host_num:
         return "host exceeded"
 
-    if monitor < 0:
-        return "monitor can't be negative"
+    if monitor <= 0:
+        return "monitor must be positive"
     elif monitor > max_monitor_num:
         return "monitor exceeded"
 
-    if peripheral < 0:
-        return "peripheral can't be negative"
+    if peripheral <= 0:
+        return "peripheral must be positive"
     elif peripheral > max_peripheral_num:
         return "peripheral exceeded"
 

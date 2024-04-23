@@ -11,6 +11,9 @@ def calendar(y: int, m: int, d: int):
     elif m > 12:
         return "month exceeded"
 
+    if_leap_year = (y % 400 == 0 or ((y % 4 == 0) and (y % 100 != 0)))
+    month_days[1] += (1 if if_leap_year else 0)
+
     if d <= 0:
         return "day is lower than 1"
     elif d > month_days[m - 1]:
@@ -19,8 +22,6 @@ def calendar(y: int, m: int, d: int):
     ret_y = y
     ret_m = m
     ret_d = d
-    if_leap_year = (y % 400 == 0 or ((y % 4 == 0) and (y % 100 != 0)))
-    month_days[1] += (1 if if_leap_year else 0)
 
     if d == month_days[m - 1]:
         if m == 12:
@@ -37,4 +38,4 @@ def calendar(y: int, m: int, d: int):
 
 
 if __name__ == "__main__":
-    print(calendar(2023, 2, 28))
+    print(calendar(2000, 2, 29))

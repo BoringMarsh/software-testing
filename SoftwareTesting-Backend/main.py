@@ -39,7 +39,7 @@ def hw_triangle():
     read_start_time = time.time_ns()  # 初始时间
 
     try:
-        df = pd.read_csv("test case/triangle.csv")  # 读取测试用例
+        df = pd.read_csv("test case/triangle_boundary.csv")  # 读取测试用例
     except FileNotFoundError:
         response = {
             "message": "test case not found"
@@ -58,6 +58,9 @@ def hw_triangle():
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
         df.iloc[i, 5] = triangle.triangle(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        df.iloc[i, 8] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        df.iloc[i, 9] = "2151294"
+        df.iloc[i, 10] = ""
 
         # 与预期输出进行比对
         if str(df.iloc[i, 4]) != str(df.iloc[i, 5]):
@@ -79,7 +82,7 @@ def hw_calendar():
     read_start_time = time.time_ns()  # 初始时间
 
     try:
-        df = pd.read_csv("test case/calendar.csv")  # 读取测试用例
+        df = pd.read_csv("test case/calendar_boundary.csv")  # 读取测试用例
     except FileNotFoundError:
         response = {
             "message": "test case not found"
@@ -98,6 +101,9 @@ def hw_calendar():
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
         df.iloc[i, 5] = calendar.calendar(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        df.iloc[i, 8] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        df.iloc[i, 9] = "2151294"
+        df.iloc[i, 10] = ""
 
         # 与预期输出进行比对
         if str(df.iloc[i, 4]) != str(df.iloc[i, 5]):

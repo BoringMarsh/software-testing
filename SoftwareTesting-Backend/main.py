@@ -72,7 +72,7 @@ def hw_triangle():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test case/triangle_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv("test result/triangle_result.csv")  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
@@ -115,7 +115,7 @@ def hw_calendar():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test case/calendar_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv("test result/calendar_result.csv")  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
@@ -158,7 +158,7 @@ def hw_telephone():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test case/telephone_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv("test result/telephone_result.csv")  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
@@ -199,7 +199,7 @@ def hw_computer():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test case/computer_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv("test result/computer_result.csv")  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.edu.tongji.springbackend.mapper.ActivityKeywordMapper">
+    <select id="getById" resultType="activityKeyword">
+        SELECT * FROM activity_keyword
+        WHERE act_id = #{id};
+    </select>
+    <insert id="insertActivityKeyword" parameterType="activityKeyword">
+        INSERT INTO activity_keyword (act_id, keyword)
+        VALUES (#{actId}, #{keyword})
+    </insert>
+    <select id="getActivityKeywords" resultType="java.lang.String">
+        SELECT keyword
+        FROM activity_keyword
+        WHERE act_id = #{actId}
+    </select>
+    <delete id="deleteActivityKeywords" parameterType="java.lang.Integer">
+        DELETE FROM activity_keyword WHERE act_id = #{actId}
+    </delete>
+</mapper>

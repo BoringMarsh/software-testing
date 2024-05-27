@@ -1,0 +1,720 @@
+﻿{
+  "widgetList": [
+    {
+      "key": 55244,
+      "type": "grid",
+      "category": "container",
+      "icon": "grid",
+      "cols": [
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "key": 49790,
+              "type": "input",
+              "icon": "text-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "actName",
+                "label": "📌活动名称",
+                "labelAlign": "label-center-align",
+                "type": "text",
+                "defaultValue": "",
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "clearable": true,
+                "showPassword": false,
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "minLength": null,
+                "maxLength": null,
+                "showWordLimit": false,
+                "prefixIcon": "",
+                "suffixIcon": "",
+                "appendButton": false,
+                "appendButtonDisabled": false,
+                "buttonIcon": "custom-search",
+                "onCreated": "",
+                "onMounted": "",
+                "onInput": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": "",
+                "onAppendButtonClick": ""
+              },
+              "id": "input74799"
+            },
+            {
+              "key": 52329,
+              "type": "textarea",
+              "icon": "textarea-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "actIntro",
+                "label": "📝活动描述",
+                "labelAlign": "label-center-align",
+                "rows": 3,
+                "defaultValue": "",
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "minLength": null,
+                "maxLength": null,
+                "showWordLimit": false,
+                "onCreated": "",
+                "onMounted": "",
+                "onInput": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": ""
+              },
+              "id": "textarea81941"
+            }
+          ],
+          "options": {
+            "name": "gridCol104521",
+            "hidden": false,
+            "span": 14,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-104521"
+        },
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "type": "select",
+              "icon": "select-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "keyword",
+                "label": "🎰活动类别",
+                "labelAlign": "label-center-align",
+                "defaultValue": [],
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "disabled": false,
+                "hidden": false,
+                "clearable": true,
+                "filterable": false,
+                "allowCreate": false,
+                "remote": false,
+                "automaticDropdown": false,
+                "multiple": true,
+                "multipleLimit": 6,
+                "optionItems": [
+                  {
+                    "value": "媒体",
+                    "label": "媒体"
+                  },
+                  {
+                    "value": "学习",
+                    "label": "学习"
+                  },
+                  {
+                    "value": "研究",
+                    "label": "研究"
+                  },
+                  {
+                    "value": "健康",
+                    "label": "健康"
+                  },
+                  {
+                    "value": "中医",
+                    "label": "中医"
+                  },
+                  {
+                    "value": "汽车",
+                    "label": "汽车"
+                  },
+                  {
+                    "value": "游戏",
+                    "label": "游戏"
+                  },
+                  {
+                    "value": "模型",
+                    "label": "模型"
+                  },
+                  {
+                    "value": "语言",
+                    "label": "语言"
+                  },
+                  {
+                    "value": "心理",
+                    "label": "心理"
+                  },
+                  {
+                    "value": "天文",
+                    "label": "天文"
+                  },
+                  {
+                    "value": "建筑",
+                    "label": "建筑"
+                  },
+                  {
+                    "value": "艺术",
+                    "label": "艺术"
+                  },
+                  {
+                    "value": "技术",
+                    "label": "技术"
+                  },
+                  {
+                    "value": "数据分析",
+                    "label": "数据分析"
+                  },
+                  {
+                    "value": "开源",
+                    "label": "开源"
+                  },
+                  {
+                    "value": "国际交流",
+                    "label": "国际交流"
+                  },
+                  {
+                    "value": "体育",
+                    "label": "体育"
+                  },
+                  {
+                    "value": "文化传承",
+                    "label": "文化传承"
+                  },
+                  {
+                    "value": "公益",
+                    "label": "公益"
+                  }
+                ],
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "onCreated": "",
+                "onMounted": "",
+                "onRemoteQuery": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": ""
+              },
+              "id": "select35419"
+            }
+          ],
+          "options": {
+            "name": "gridCol83210",
+            "hidden": false,
+            "span": 6,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-83210"
+        }
+      ],
+      "options": {
+        "name": "grid56906",
+        "hidden": false,
+        "gutter": 12,
+        "colHeight": null,
+        "customClass": []
+      },
+      "id": "grid56906"
+    },
+    {
+      "key": 55245,
+      "type": "grid",
+      "category": "container",
+      "icon": "grid",
+      "cols": [
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "key": 29847,
+              "type": "number",
+              "icon": "number-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "ticketPrice",
+                "label": "💰活动票价",
+                "labelAlign": "label-center-align",
+                "defaultValue": 0.00,
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "disabled": false,
+                "hidden": false,
+                "required": true,
+                "requiredHint": "",
+                "validation": "number",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "min": 0.00,
+                "max": 100000000000,
+                "precision": 2,
+                "step": 1,
+                "controlsPosition": "right",
+                "onCreated": "",
+                "onMounted": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": ""
+              },
+              "id": "number70244"
+            }
+          ],
+          "options": {
+            "name": "gridCol35604",
+            "hidden": false,
+            "span": 7,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-35604"
+        },
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "key": 29847,
+              "type": "number",
+              "icon": "number-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "actCapacity",
+                "label": "👨‍👩‍👧活动名额",
+                "labelAlign": "label-center-align",
+                "defaultValue": 1,
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "disabled": false,
+                "hidden": false,
+                "required": true,
+                "requiredHint": "",
+                "validation": "number",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "min": 1,
+                "max": 100000000000,
+                "precision": 0,
+                "step": 1,
+                "controlsPosition": "right",
+                "onCreated": "",
+                "onMounted": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": ""
+              },
+              "id": "number41801"
+            }
+          ],
+          "options": {
+            "name": "gridCol72488",
+            "hidden": false,
+            "span": 6,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-72488"
+        }
+      ],
+      "options": {
+        "name": "grid39955",
+        "hidden": false,
+        "gutter": 12,
+        "colHeight": null,
+        "customClass": []
+      },
+      "id": "grid39955"
+    },
+    {
+      "key": 55246,
+      "type": "grid",
+      "category": "container",
+      "icon": "grid",
+      "cols": [
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "type": "date",
+              "icon": "date-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "regStartTime",
+                "label": "📆报名开始日期",
+                "labelAlign": "label-center-align",
+                "type": "datetime",
+                "defaultValue": null,
+                "placeholder": "",
+                "columnWidth": "100px",
+                "size": "",
+                "labelWidth": "auto",
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "clearable": false,
+                "editable": false,
+                "format": "YYYY-MM-DD HH:mm:ss",
+                "valueFormat": "YYYY-MM-DD HH:mm:ss",
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": "",
+                "labelIconPosition": "rear",
+                "labelTooltip": "",
+                "onCreated": "",
+                "onMounted": "var currentWidget = this;\nconst currentDate = new Date();\nconst year = currentDate.getFullYear();\nconst month = String(currentDate.getMonth() + 1).padStart(2, '0');\nconst day = String(currentDate.getDate()).padStart(2, '0');\nconst formattedDate = `${year}-${month}-${day}`;\ncurrentWidget.setValue(formattedDate);",
+                "onChange": "const currentDate = new Date();\r\nconst inputDate = new Date(value);\r\n  // 比较日期部分，忽略时间\r\n  currentDate.setHours(0, 0, 0, 0);\r\n  inputDate.setHours(0, 0, 0, 0);\r\n\r\n  if (inputDate < currentDate) {\r\n    alert(\"日期不得小于当前日期！请重新填写\");\r\n    // const currentDate = new Date();\r\n    // const year = currentDate.getFullYear();\r\n    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');\r\n    // const day = String(currentDate.getDate()).padStart(2, '0');\r\n    \r\n    // const formattedDate = `${year}-${month}-${day}`;\r\n    this.setValue('');\r\n    \r\n  } else {\r\n    console.log(\"日期更改成功！\");\r\n  }",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": "",
+                "autoFullWidth": false,
+                "labelWrap": false,
+                "keyNameEnabled": false,
+                "keyName": "COM_EXPIRATIONDATE"
+              },
+              "id": "date94236"
+            }
+          ],
+          "options": {
+            "name": "gridCol109551",
+            "hidden": false,
+            "span": 7,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-109551"
+        },
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "type": "date",
+              "icon": "date-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "regEndTime",
+                "label": "📆报名截止日期",
+                "labelAlign": "label-center-align",
+                "type": "datetime",
+                "defaultValue": null,
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": "auto",
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "clearable": false,
+                "editable": false,
+                "format": "YYYY-MM-DD HH:mm:ss",
+                "valueFormat": "YYYY-MM-DD HH:mm:ss",
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": "",
+                "labelIconPosition": "rear",
+                "labelTooltip": "",
+                "onCreated": "",
+                "onMounted": "var currentWidget = this;\nconst currentDate = new Date();\nconst year = currentDate.getFullYear();\nconst month = String(currentDate.getMonth() + 1).padStart(2, '0');\nconst day = String(currentDate.getDate()).padStart(2, '0');\nconst formattedDate = `${year}-${month}-${day}`;\ncurrentWidget.setValue(formattedDate);",
+                "onChange": "const currentDate = new Date();\r\nconst inputDate = new Date(value);\r\n  // 比较日期部分，忽略时间\r\n  currentDate.setHours(0, 0, 0, 0);\r\n  inputDate.setHours(0, 0, 0, 0);\r\n\r\n  if (inputDate < currentDate) {\r\n    alert(\"日期不得小于当前日期！请重新填写\");\r\n    // const currentDate = new Date();\r\n    // const year = currentDate.getFullYear();\r\n    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');\r\n    // const day = String(currentDate.getDate()).padStart(2, '0');\r\n    \r\n    // const formattedDate = `${year}-${month}-${day}`;\r\n    this.setValue('');\r\n    \r\n  } else {\r\n    console.log(\"日期更改成功！\");\r\n  }",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": "",
+                "autoFullWidth": false,
+                "labelWrap": false,
+                "keyNameEnabled": false,
+                "keyName": "COM_EXPIRATIONDATE"
+              },
+              "id": "date94236"
+            }
+          ],
+          "options": {
+            "name": "gridCol109551",
+            "hidden": false,
+            "span": 7,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-109551"
+        },
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "type": "date",
+              "icon": "date-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "actTime",
+                "label": "📆活动时间",
+                "labelAlign": "label-center-align",
+                "type": "datetime",
+                "defaultValue": null,
+                "placeholder": "",
+                "columnWidth": "200px",
+                "size": "",
+                "labelWidth": "auto",
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "clearable": false,
+                "editable": false,
+                "format": "YYYY-MM-DD HH:mm:ss",
+                "valueFormat": "YYYY-MM-DD HH:mm:ss",
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": "",
+                "labelIconPosition": "rear",
+                "labelTooltip": "",
+                "onCreated": "",
+                "onMounted": "var currentWidget = this;\nconst currentDate = new Date();\nconst year = currentDate.getFullYear();\nconst month = String(currentDate.getMonth() + 1).padStart(2, '0');\nconst day = String(currentDate.getDate()).padStart(2, '0');\nconst formattedDate = `${year}-${month}-${day}`;\ncurrentWidget.setValue(formattedDate);",
+                "onChange": "const currentDate = new Date();\r\nconst inputDate = new Date(value);\r\n  // 比较日期部分，忽略时间\r\n  currentDate.setHours(0, 0, 0, 0);\r\n  inputDate.setHours(0, 0, 0, 0);\r\n\r\n  if (inputDate < currentDate) {\r\n    alert(\"日期不得小于当前日期！请重新填写\");\r\n    // const currentDate = new Date();\r\n    // const year = currentDate.getFullYear();\r\n    // const month = String(currentDate.getMonth() + 1).padStart(2, '0');\r\n    // const day = String(currentDate.getDate()).padStart(2, '0');\r\n    \r\n    // const formattedDate = `${year}-${month}-${day}`;\r\n    this.setValue('');\r\n    \r\n  } else {\r\n    console.log(\"日期更改成功！\");\r\n  }",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": "",
+                "autoFullWidth": false,
+                "labelWrap": false,
+                "keyNameEnabled": false,
+                "keyName": "COM_EXPIRATIONDATE"
+              },
+              "id": "date94236"
+            }
+          ],
+          "options": {
+            "name": "gridCol109551",
+            "hidden": false,
+            "span": 7,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-109551"
+        }
+      ],
+      "options": {
+        "name": "grid39955",
+        "hidden": false,
+        "gutter": 12,
+        "colHeight": null,
+        "customClass": []
+      },
+      "id": "grid39955"
+    },
+    {
+      "key": 55247,
+      "type": "grid",
+      "category": "container",
+      "icon": "grid",
+      "cols": [
+        {
+          "type": "grid-col",
+          "category": "container",
+          "icon": "grid-col",
+          "internal": true,
+          "widgetList": [
+            {
+              "key": 52329,
+              "type": "textarea",
+              "icon": "textarea-field",
+              "formItemFlag": true,
+              "options": {
+                "name": "actLocation",
+                "label": "🚩活动地点",
+                "labelAlign": "label-center-align",
+                "rows": 1,
+                "defaultValue": "",
+                "placeholder": "",
+                "columnWidth": "100px",
+                "size": "",
+                "labelWidth": null,
+                "labelHidden": false,
+                "readonly": false,
+                "disabled": false,
+                "hidden": false,
+                "required": true,
+                "requiredHint": "",
+                "validation": "",
+                "validationHint": "",
+                "customClass": [],
+                "labelIconClass": null,
+                "labelIconPosition": "rear",
+                "labelTooltip": null,
+                "minLength": null,
+                "maxLength": null,
+                "showWordLimit": false,
+                "onCreated": "",
+                "onMounted": "",
+                "onInput": "",
+                "onChange": "",
+                "onFocus": "",
+                "onBlur": "",
+                "onValidate": ""
+              },
+              "id": "textarea81941"
+            }
+          ],
+          "options": {
+            "name": "gridCol104521",
+            "hidden": false,
+            "span": 7,
+            "offset": 0,
+            "push": 3,
+            "pull": 0,
+            "responsive": false,
+            "md": 12,
+            "sm": 12,
+            "xs": 12,
+            "customClass": []
+          },
+          "id": "grid-col-104521"
+        }
+      ],
+      "options": {
+        "name": "grid56906",
+        "hidden": false,
+        "gutter": 12,
+        "colHeight": null,
+        "customClass": []
+      },
+      "id": "grid56906"
+    }
+  ],
+  "formConfig": {
+    "modelName": "formData",
+    "refName": "vForm",
+    "rulesName": "rules",
+    "labelWidth": 80,
+    "labelPosition": "left",
+    "size": "",
+    "labelAlign": "label-left-align",
+    "cssCode": "",
+    "customClass": [],
+    "functions": "",
+    "layoutType": "PC",
+    "jsonVersion": 3,
+    "dataSources": [],
+    "onFormCreated": "",
+    "onFormMounted": "",
+    "onFormDataChange": ""
+  }
+}

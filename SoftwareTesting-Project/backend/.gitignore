@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### 单元测试结果 ###
+test-case/unit/user/*_result.csv
+test-case/unit/comment/*_result.csv
+test-case/unit/activity/*_result.csv
+test-case/unit/order/*_result.csv

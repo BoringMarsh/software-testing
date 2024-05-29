@@ -3,12 +3,14 @@ package cn.edu.tongji.springbackend.service.impl;
 import cn.edu.tongji.springbackend.dto.AddCommentRequest;
 import cn.edu.tongji.springbackend.dto.CommentInfo;
 import cn.edu.tongji.springbackend.dto.ReplyCommentRequest;
+import cn.edu.tongji.springbackend.exceptions.CommentException;
 import cn.edu.tongji.springbackend.mapper.CommentMapper;
 import cn.edu.tongji.springbackend.model.Comment;
 import cn.edu.tongji.springbackend.service.CommunicateService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -64,6 +66,15 @@ public class CommunicateServiceImpl implements CommunicateService {
 
     @Override
     public void addComment(AddCommentRequest addCommentRequest) {
+        if (addCommentRequest.getCmtContent() == null
+                || Objects.equals(addCommentRequest.getCmtContent(), "")) {
+            throw new CommentException("comment content is empty");
+        }
+
+        else if (addCommentRequest.getCmtContent().length() > 1024) {
+            throw new CommentException("comment length exceeded");
+        }
+
         commentMapper.add(Comment.builder()
                 .cmtFather(0)
                 .cmtContent(addCommentRequest.getCmtContent())

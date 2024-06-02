@@ -4,6 +4,7 @@ package cn.edu.tongji.springbackend.service.impl;
 import cn.edu.tongji.springbackend.controller.KeywordsController;
 import cn.edu.tongji.springbackend.dto.*;
 import cn.edu.tongji.springbackend.exceptions.NotFoundException;
+import cn.edu.tongji.springbackend.exceptions.OrderException;
 import cn.edu.tongji.springbackend.mapper.*;
 import cn.edu.tongji.springbackend.model.*;
 import cn.edu.tongji.springbackend.service.ProfileService;
@@ -347,6 +348,20 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void setUserProhibitedStatus(int userId, boolean ifProhibited) {
         User user = userMapper.getUserById(userId);
+
+        if (user == null) {
+            throw new OrderException("user not found");
+        }
+        else if (user.getRole() == 2) {
+            throw new OrderException("cannot prohibit admin");
+        }
+        else if (ifProhibited && user.getAccountStatus() != 1) {
+            throw new OrderException("prohibiting abnormal user");
+        }
+        else if (!ifProhibited && user.getAccountStatus() != 0) {
+            throw new OrderException("unbanning normal user");
+        }
+
         user.setAccountStatus(ifProhibited ? 0 : 1);
         userMapper.updateUser(user);
     }

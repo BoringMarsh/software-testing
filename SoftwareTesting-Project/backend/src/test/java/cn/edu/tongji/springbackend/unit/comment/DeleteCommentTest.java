@@ -1,7 +1,6 @@
 package cn.edu.tongji.springbackend.unit.comment;
 
 import cn.edu.tongji.springbackend.TestException;
-import cn.edu.tongji.springbackend.dto.AddCommentRequest;
 import cn.edu.tongji.springbackend.service.CommunicateService;
 import io.qameta.allure.*;
 import jakarta.annotation.Resource;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +19,13 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.edu.tongji.springbackend.util.CSVUtils.*;
-import static cn.edu.tongji.springbackend.util.PathUtil.*;
-import static cn.edu.tongji.springbackend.util.TimeUtils.*;
+import static cn.edu.tongji.springbackend.util.CSVUtils.updateBlock;
+import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_COMMENT;
+import static cn.edu.tongji.springbackend.util.TimeUtils.getFormatter;
 
 @SpringBootTest
 @Transactional
-public class AddCommentTest {
+public class DeleteCommentTest {
     /**
      * 被测对象
      */
@@ -38,28 +37,22 @@ public class AddCommentTest {
      */
     @Data
     @AllArgsConstructor
-    private static class AddCommentTestCase {
-        private String actId;
-        private String userId;
-        private String cmtContent;
-        private String cmtTime;
+    private static class DeleteCommentTestCase {
+        private String cmtId;
     }
 
     /**
      * 一些常量，包括测试用例路径、特定内容的列号等
      */
-    private static final String TEST_CASE_FILENAME = "add_comment.csv";
-    private static final String TEST_CASE_RESULT_FILENAME = "add_comment_result.csv";
+    private static final String TEST_CASE_FILENAME = "delete_comment.csv";
+    private static final String TEST_CASE_RESULT_FILENAME = "delete_comment_result.csv";
     private static final String TEST_PERSON = "2151294";
-    private static final int COLUMN_USER_ID = 1;
-    private static final int COLUMN_ACT_ID = 2;
-    private static final int COLUMN_CMT_CONTENT = 3;
-    private static final int COLUMN_CMT_TIME = 4;
-    private static final int COLUMN_EXPECTED_OUTPUT = 5;
-    private static final int COLUMN_ACTUAL_OUTPUT = 6;
-    private static final int COLUMN_RESULT = 7;
-    private static final int COLUMN_TIME = 9;
-    private static final int COLUMN_PERSON = 10;
+    private static final int COLUMN_CMT_ID = 1;
+    private static final int COLUMN_EXPECTED_OUTPUT = 2;
+    private static final int COLUMN_ACTUAL_OUTPUT = 3;
+    private static final int COLUMN_RESULT = 4;
+    private static final int COLUMN_TIME = 6;
+    private static final int COLUMN_PERSON = 7;
 
     /**
      * 测试时变量，包括读取进内存的csv表格、总用例数、已执行用例数等
@@ -70,59 +63,44 @@ public class AddCommentTest {
 
     /**
      * 测试前置函数，通过读取csv文件返回测试用例对象列表。同时重置相关计数器
-     * @return AddCommentTestCase列表
+     * @return DeleteCommentTestCase列表
      */
-    private static List<AddCommentTestCase> provideAddCommentTestCases() {
-        List<AddCommentTestCase> suite = new ArrayList<>();
+    private static List<DeleteCommentTestCase> provideDeleteCommentTestCases() {
+        List<DeleteCommentTestCase> suite = new ArrayList<>();
         data = readCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_FILENAME);
         total = data.size();
         executed = 1;
 
         for (int i = 1; i < data.size(); i++) {
-            String[] line = data.get(i);
-
-            suite.add(new AddCommentTestCase(
-                    line[COLUMN_ACT_ID],
-                    line[COLUMN_USER_ID],
-                    line[COLUMN_CMT_CONTENT],
-                    line[COLUMN_CMT_TIME]
-            ));
+            suite.add(new DeleteCommentTestCase(data.get(i)[COLUMN_CMT_ID]));
         }
 
         return suite;
     }
 
     @ParameterizedTest
-    @MethodSource("provideAddCommentTestCases")
+    @MethodSource("provideDeleteCommentTestCases")
     @Description("This is a test description")
     @Epic("Comment模块")
-    @Feature("添加评论")
-    @Story("用户在社团的活动下方发表评论或回复其他评论")
+    @Feature("删除评论")
+    @Story("用户在社团的活动下方删除自己发送的评论")
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Test Authentication")
     @Owner("2151294")
     @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("AUTH-123")
+    @Issue("JIT-1")
     @TmsLink("TMS-456")
     @Sql(scripts = "/sql/comment_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    public void addCommentTest(AddCommentTestCase testCase) {
+    public void addCommentTest(DeleteCommentTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
 
         //调取测试方法，获取实际输出
         try {
-            communicateService.addComment(new AddCommentRequest(
-                    testCase.getCmtContent(),
-                    LocalDateTime.parse(testCase.getCmtTime(), getFormatter()),
-                    Integer.valueOf(testCase.getActId()),
-                    Integer.valueOf(testCase.getUserId())
-            ));
-
-            actualOutput = "add comment success";
+            communicateService.deleteComment(Integer.parseInt(testCase.getCmtId()));
+            actualOutput = "delete comment success";
         } catch (NumberFormatException e) {
             actualOutput = e.getMessage().subSequence(0, 20).toString();
-        } catch (DataIntegrityViolationException e) {
-            actualOutput = e.getMessage().subSequence(6, 30).toString();
         } catch (Exception e) {
             actualOutput = e.getMessage();
         }

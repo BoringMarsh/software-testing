@@ -11,4 +11,5 @@ public interface CommunicateService {
     String getCommentByCmtId(int cmtId);
     void addComment(AddCommentRequest addCommentRequest);
     void replyComment(ReplyCommentRequest replyCommentRequest);
+    void deleteComment(int cmtId);
 }

@@ -10,7 +10,6 @@ import cn.edu.tongji.springbackend.service.CommunicateService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -95,5 +94,21 @@ public class CommunicateServiceImpl implements CommunicateService {
                 .userId(replyCommentRequest.getUserId())
                 .build()
         );
+    }
+
+    @Override
+    public void deleteComment(int cmtId) {
+        if (commentMapper.getByCmtId(cmtId) == null) {
+            throw new CommentException("deleting nonexistent comment");
+        }
+
+        Queue<Integer> openList = new LinkedList<>();
+        openList.add(cmtId);
+
+        while (!openList.isEmpty()) {
+            final int current = openList.poll();
+            openList.addAll(commentMapper.getChildIdsByCmtId(current));
+            commentMapper.delete(current);
+        }
     }
 }

@@ -12,8 +12,17 @@
         WHERE act_id = #{actId};
     </select>
 
+    <select id="getChildIdsByCmtId" resultType="int">
+        SELECT cmt_id FROM comment
+        WHERE cmt_father = #{cmtId};
+    </select>
+
     <insert id="add" parameterType="comment">
         INSERT INTO comment(cmt_father, cmt_content, cmt_time, act_id, user_id)
         VALUES (#{cmtFather}, #{cmtContent}, #{cmtTime}, #{actId}, #{userId});
     </insert>
+
+    <delete id="delete">
+        DELETE FROM comment WHERE cmt_id = #{cmtId};
+    </delete>
 </mapper>

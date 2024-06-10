@@ -5,6 +5,7 @@ import cn.edu.tongji.springbackend.controller.KeywordsController;
 import cn.edu.tongji.springbackend.dto.RegSocietyRequest;
 import cn.edu.tongji.springbackend.dto.RegStudentRequest;
 import cn.edu.tongji.springbackend.exceptions.FileStorageException;
+import cn.edu.tongji.springbackend.exceptions.RegisterException;
 import cn.edu.tongji.springbackend.mapper.SocietyMapper;
 import cn.edu.tongji.springbackend.mapper.StudentKeywordMapper;
 import cn.edu.tongji.springbackend.mapper.StudentMapper;
@@ -47,21 +48,53 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     @Transactional
-    public int registerStudent(RegStudentRequest registrationRequest) {
+    public int registerStudent(RegStudentRequest regStudentRequest) {
+        final String username = regStudentRequest.getUsername();
+        final String password = regStudentRequest.getPassword();
+        final String email = regStudentRequest.getEmail();
+        final String phone = regStudentRequest.getPhone();
+        final String payPassword = regStudentRequest.getPayPassword();
+        final String stuName = regStudentRequest.getStuName();
+        final String stuNotes = regStudentRequest.getStuNotes();
 
-        User user = new User();
-        user.setUsername(registrationRequest.getUsername());
-        user.setPassword(encryptService.encryptPassword(registrationRequest.getPassword()));
-        user.setEmail(registrationRequest.getEmail());
-        user.setPhone(registrationRequest.getPhone());
-        user.setCampus(registrationRequest.getCampus());
-        user.setLoginStatus(0);
-        user.setAccountStatus(2);
-        user.setBalance(0.0);
-        user.setPayPassword(encryptService.encryptPassword(registrationRequest.getPayPassword()));
-        user.setRegTime(LocalDateTime.now());  // Set regTime to current time
-        user.setRole(0);  // Assuming 0 is the role for normal users
+        if (username == null || username.equals("") || username.length() > 16) {
+            throw new RegisterException("abnormal username length");
+        } else if (password == null || password.equals("") || password.length() > 24) {
+            throw new RegisterException("abnormal password length");
+        } else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$")) {
+            throw new RegisterException("incorrect password pattern");
+        } else if (email == null || email.equals("") || email.length() > 64) {
+            throw new RegisterException("abnormal email length");
+        } else if (phone == null || phone.length() != 11) {
+            throw new RegisterException("abnormal phone length");
+        } else if (!phone.matches("^\\d+$")) {
+            throw new RegisterException("incorrect phone pattern");
+        } else if (payPassword == null || payPassword.length() != 6) {
+            throw new RegisterException("abnormal pay password length");
+        } else if (!payPassword.matches("^\\d+$")) {
+            throw new RegisterException("incorrect pay password pattern");
+        } else if (stuName == null || stuName.equals("") || stuName.length() > 64) {
+            throw new RegisterException("abnormal student name length");
+        } else if (stuNotes == null || stuNotes.equals("") || stuNotes.length() > 128) {
+            throw new RegisterException("abnormal student notes length");
+        }
+
+        User user = User.builder()
+                .username(username)
+                .password(encryptService.encryptPassword(password))
+                .email(email)
+                .phone(phone)
+                .campus(regStudentRequest.getCampus())
+                .loginStatus(0)
+                .accountStatus(2)
+                .balance(0.0)
+                .payPassword(encryptService.encryptPassword(payPassword))
+                .regTime(LocalDateTime.now())  // Set regTime to current time
+                .role(0)  // Assuming 0 is the role for normal users
+                .build();
+
         logger.info("Successfully set user info: {}", user);
+
         // Insert the user into the user table and retrieve the generated ID
         int rowsAffected = userMapper.insertUser(user);
 
@@ -75,18 +108,20 @@ public class RegisterServiceImpl implements RegisterService {
             logger.error("Failed to insert user");
         }
 
-        Student student = new Student();
-        student.setStuId(user.getId());
-        student.setStuName(registrationRequest.getStuName());
-        student.setStuYear(registrationRequest.getStuYear());
-        student.setStuSchool(registrationRequest.getStuSchool());
-        student.setStuMajor(registrationRequest.getStuMajor());
-        student.setStuNotes(registrationRequest.getStuNotes());
+        Student student = Student.builder()
+                .stuId(user.getId())
+                .stuName(stuName)
+                .stuYear(regStudentRequest.getStuYear())
+                .stuSchool(regStudentRequest.getStuSchool())
+                .stuMajor(regStudentRequest.getStuMajor())
+                .stuNotes(stuNotes)
+                .build();
+
         logger.info("Successfully set user info: {}", student);
         // Insert the student into the student table
         studentMapper.insertStudent(student);
 
-        List<StudentKeyword> studentKeywords = registrationRequest.getKeywords().stream()
+        List<StudentKeyword> studentKeywords = regStudentRequest.getKeywords().stream()
                 .map(keyword -> {
                     StudentKeyword studentKeyword = new StudentKeyword();
                     studentKeyword.setStuId(user.getId());
@@ -107,20 +142,22 @@ public class RegisterServiceImpl implements RegisterService {
     // Add other methods as needed
     @Override
     @Transactional
-    public int registerSociety(RegSocietyRequest registrationRequest) {
+    public int registerSociety(RegSocietyRequest regSocietyRequest) {
         try{
-            User user = new User();
-            user.setUsername(registrationRequest.getUsername());
-            user.setPassword(encryptService.encryptPassword(registrationRequest.getPassword()));
-            user.setEmail(registrationRequest.getEmail());
-            user.setPhone(registrationRequest.getPhone());
-            user.setCampus(registrationRequest.getCampus());
-            user.setLoginStatus(0);
-            user.setAccountStatus(2);
-            user.setBalance(0.0);
-            user.setPayPassword(encryptService.encryptPassword(registrationRequest.getPayPassword()));
-            user.setRegTime(LocalDateTime.now());  // Set regTime to current time
-            user.setRole(1);
+            User user = User.builder()
+                    .username(regSocietyRequest.getUsername())
+                    .password(encryptService.encryptPassword(regSocietyRequest.getPassword()))
+                    .email(regSocietyRequest.getEmail())
+                    .phone(regSocietyRequest.getPhone())
+                    .campus(regSocietyRequest.getCampus())
+                    .loginStatus(0)
+                    .accountStatus(2)
+                    .balance(0.0)
+                    .payPassword(encryptService.encryptPassword(regSocietyRequest.getPayPassword()))
+                    .regTime(LocalDateTime.now())
+                    .role(1)
+                    .build();
+
             logger.info("Successfully set user info: {}", user);
             // Insert the user into the user table and retrieve the generated ID
             int rowsAffected = userMapper.insertUser(user);
@@ -135,25 +172,27 @@ public class RegisterServiceImpl implements RegisterService {
                 logger.error("Failed to insert user");
             }
 
-            Society society = new Society();
-            society.setSocId(user.getId());
-            society.setSocName(registrationRequest.getSocName());
-            society.setSocIntro(registrationRequest.getSocIntro());
-            society.setSocType(registrationRequest.getSocType());
+            Society society = Society.builder()
+                    .socId(user.getId())
+                    .socName(regSocietyRequest.getSocName())
+                    .socIntro(regSocietyRequest.getSocIntro())
+                    .socType(regSocietyRequest.getSocType())
+                    .build();
+
             // Process and save society logo
-            if (registrationRequest.getSocLogoFile() != null && !registrationRequest.getSocLogoFile().isEmpty()) {
-                String logoPath = saveLogo(registrationRequest.getSocLogoFile());
+            if (regSocietyRequest.getSocLogoFile() != null && !regSocietyRequest.getSocLogoFile().isEmpty()) {
+                String logoPath = saveLogo(regSocietyRequest.getSocLogoFile());
                 society.setSocLogo(logoPath);
             }
             // Insert the society into the society table
             societyMapper.insertSociety(society);
             logger.info("Successfully inserted society with ID: {}", user.getId());
             // Process and save society admins, images, and keywords
-            processSocietyAdmins(user.getId(), registrationRequest.getSocAdminRegs());
+            processSocietyAdmins(user.getId(), regSocietyRequest.getSocAdminRegs());
             logger.info("Successfully inserted socAdmins with ID: {}", user.getId());
-            processSocietyImages(user.getId(), registrationRequest.getSocImageFiles());
+            processSocietyImages(user.getId(), regSocietyRequest.getSocImageFiles());
             logger.info("Successfully inserted socImages with ID: {}", user.getId());
-            processSocietyKeywords(user.getId(), registrationRequest.getSocKeywords());
+            processSocietyKeywords(user.getId(), regSocietyRequest.getSocKeywords());
             logger.info("Successfully inserted socKeywords with ID: {}", user.getId());
 
             return user.getId();

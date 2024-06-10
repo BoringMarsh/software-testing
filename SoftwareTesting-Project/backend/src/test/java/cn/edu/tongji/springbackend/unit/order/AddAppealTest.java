@@ -1,8 +1,8 @@
-package cn.edu.tongji.springbackend.unit.comment;
+package cn.edu.tongji.springbackend.unit.order;
 
 import cn.edu.tongji.springbackend.TestException;
-import cn.edu.tongji.springbackend.dto.AddCommentRequest;
-import cn.edu.tongji.springbackend.service.CommunicateService;
+import cn.edu.tongji.springbackend.dto.AddAppealRequest;
+import cn.edu.tongji.springbackend.service.OrderService;
 import io.qameta.allure.*;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -21,45 +21,49 @@ import java.util.List;
 import java.util.Objects;
 
 import static cn.edu.tongji.springbackend.util.CSVUtils.*;
-import static cn.edu.tongji.springbackend.util.PathUtil.*;
-import static cn.edu.tongji.springbackend.util.TimeUtils.*;
+import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_ORDER;
+import static cn.edu.tongji.springbackend.util.TimeUtils.getFormatter;
 
 @SpringBootTest
 @Transactional
-public class AddCommentTest {
+public class AddAppealTest {
     /**
      * 被测对象
      */
     @Resource
-    private CommunicateService communicateService;
+    private OrderService orderService;
 
     /**
      * 测试用例类
      */
     @Data
     @AllArgsConstructor
-    private static class AddCommentTestCase {
-        private String actId;
+    private static class AddAppealTestCase {
         private String userId;
-        private String cmtContent;
-        private String cmtTime;
+        private String actId;
+        private String cmtId;
+        private String complainantId;
+        private String appTime;
+        private String appContent;
     }
 
     /**
      * 一些常量，包括测试用例路径、特定内容的列号等
      */
-    private static final String TEST_CASE_FILENAME = "add_comment.csv";
-    private static final String TEST_CASE_RESULT_FILENAME = "add_comment_result.csv";
+    private static final String TEST_CASE_FILENAME = "add_appeal.csv";
+    private static final String TEST_CASE_RESULT_FILENAME = "add_appeal_result.csv";
     private static final String TEST_PERSON = "2151294";
     private static final int COLUMN_USER_ID = 1;
     private static final int COLUMN_ACT_ID = 2;
-    private static final int COLUMN_CMT_CONTENT = 3;
-    private static final int COLUMN_CMT_TIME = 4;
-    private static final int COLUMN_EXPECTED_OUTPUT = 5;
-    private static final int COLUMN_ACTUAL_OUTPUT = 6;
-    private static final int COLUMN_RESULT = 7;
-    private static final int COLUMN_TIME = 9;
-    private static final int COLUMN_PERSON = 10;
+    private static final int COLUMN_CMT_ID = 3;
+    private static final int COLUMN_COMPLAINANT_ID = 4;
+    private static final int COLUMN_APP_TIME = 5;
+    private static final int COLUMN_APP_CONTENT = 6;
+    private static final int COLUMN_EXPECTED_OUTPUT = 7;
+    private static final int COLUMN_ACTUAL_OUTPUT = 8;
+    private static final int COLUMN_RESULT = 9;
+    private static final int COLUMN_TIME = 11;
+    private static final int COLUMN_PERSON = 12;
 
     /**
      * 测试时变量，包括读取进内存的csv表格、总用例数、已执行用例数等
@@ -70,22 +74,24 @@ public class AddCommentTest {
 
     /**
      * 测试前置函数，通过读取csv文件返回测试用例对象列表。同时重置相关计数器
-     * @return AddCommentTestCase列表
+     * @return AddAppealTestCase列表
      */
-    private static List<AddCommentTestCase> provideAddCommentTestCases() {
-        List<AddCommentTestCase> suite = new ArrayList<>();
-        data = readCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_FILENAME);
+    private static List<AddAppealTestCase> provideAddAppealTestCases() {
+        List<AddAppealTestCase> suite = new ArrayList<>();
+        data = readCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_FILENAME);
         total = data.size();
         executed = 1;
 
         for (int i = 1; i < data.size(); i++) {
             String[] line = data.get(i);
 
-            suite.add(new AddCommentTestCase(
-                    line[COLUMN_ACT_ID],
+            suite.add(new AddAppealTestCase(
                     line[COLUMN_USER_ID],
-                    line[COLUMN_CMT_CONTENT],
-                    line[COLUMN_CMT_TIME]
+                    line[COLUMN_ACT_ID],
+                    line[COLUMN_CMT_ID],
+                    line[COLUMN_COMPLAINANT_ID],
+                    line[COLUMN_APP_TIME],
+                    line[COLUMN_APP_CONTENT]
             ));
         }
 
@@ -93,32 +99,39 @@ public class AddCommentTest {
     }
 
     @ParameterizedTest
-    @MethodSource("provideAddCommentTestCases")
+    @MethodSource("provideAddAppealTestCases")
     @Description("This is a test description")
-    @Epic("Comment模块")
-    @Feature("添加评论")
-    @Story("用户在社团的活动下方发表新的评论")
+    @Epic("Order模块")
+    @Feature("添加申诉")
+    @Story("- 用户对于特定对象（用户、评论、活动等）进行举报")
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Test Authentication")
     @Owner("2151294")
     @Link(name = "Website", url = "https://dev.example.com/")
     @Issue("AUTH-123")
     @TmsLink("TMS-456")
-    @Sql(scripts = "/sql/comment_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-    public void addCommentTest(AddCommentTestCase testCase) {
+    @Sql(scripts = "/sql/appeal_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    public void addAppealTest(AddAppealTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
 
         //调取测试方法，获取实际输出
         try {
-            communicateService.addComment(new AddCommentRequest(
-                    testCase.getCmtContent(),
-                    LocalDateTime.parse(testCase.getCmtTime(), getFormatter()),
-                    Integer.valueOf(testCase.getActId()),
-                    Integer.valueOf(testCase.getUserId())
+            final String userId = testCase.getUserId();
+            final String actId = testCase.getActId();
+            final String cmtId = testCase.getCmtId();
+
+            orderService.addAppeal(new AddAppealRequest(
+                    LocalDateTime.parse(testCase.getAppTime(), getFormatter()),
+                    testCase.getAppContent(),
+                    userId == null || userId.equals("") ? null : Integer.valueOf(userId),
+                    actId == null || actId.equals("") ? null : Integer.valueOf(actId),
+                    cmtId == null || cmtId.equals("") ? null : Integer.valueOf(cmtId),
+                    Integer.valueOf(testCase.getComplainantId()),
+                    null
             ));
 
-            actualOutput = "add comment success";
+            actualOutput = "add appeal success";
         } catch (NumberFormatException e) {
             actualOutput = e.getMessage().subSequence(0, 20).toString();
         } catch (DataIntegrityViolationException e) {
@@ -137,7 +150,7 @@ public class AddCommentTest {
 
         //若执行到最后一行，将填入后的数据写入结果csv文件
         if (executed == total - 1)
-            writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
+            writeCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_RESULT_FILENAME, data);
         else
             executed++;
 

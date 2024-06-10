@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CommunicateService {
     List<CommentInfo> getCommentByActId(int actId);
+    CommentInfo getDetailedCommentByCmtId(int cmtId);
     String getCommentByCmtId(int cmtId);
     void addComment(AddCommentRequest addCommentRequest);
     void replyComment(ReplyCommentRequest replyCommentRequest);

@@ -2,11 +2,15 @@ package cn.edu.tongji.springbackend.service.impl;
 
 import cn.edu.tongji.springbackend.config.FileStorageProperties;
 import cn.edu.tongji.springbackend.dto.*;
+import cn.edu.tongji.springbackend.exceptions.CommentException;
 import cn.edu.tongji.springbackend.exceptions.FileStorageException;
+import cn.edu.tongji.springbackend.exceptions.OrderException;
 import cn.edu.tongji.springbackend.mapper.AppealImageMapper;
 import cn.edu.tongji.springbackend.mapper.AppealMapper;
+import cn.edu.tongji.springbackend.mapper.UserMapper;
 import cn.edu.tongji.springbackend.model.Appeal;
 import cn.edu.tongji.springbackend.model.AppealImage;
+import cn.edu.tongji.springbackend.model.User;
 import cn.edu.tongji.springbackend.service.OrderService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -19,13 +23,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    @Resource
+    private UserMapper userMapper;
     @Resource
     private AppealMapper appealMapper;
     @Resource
@@ -107,11 +110,45 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void addAppeal(AddAppealRequest addAppealRequest) {
+        final boolean ifUserIdNull = addAppealRequest.getUserId() == null;
+        final boolean ifCmtIdNull = addAppealRequest.getCmtId() == null;
+        final boolean ifActIdNull = addAppealRequest.getActId() == null;
+        final Integer userId = addAppealRequest.getUserId();
+        final Integer complainantId = addAppealRequest.getComplainantId();
+        final String appContent = addAppealRequest.getAppContent();
+        int appMatters;
+
+        if (!ifUserIdNull && ifCmtIdNull && ifActIdNull) {
+            User user = userMapper.getUserById(userId);
+
+            if (user == null) {
+                throw new OrderException("reported user not found");
+            } else if (user.getRole() == 1) {
+                appMatters = 4;
+            } else {
+                appMatters = 3;
+            }
+        } else if (ifUserIdNull && !ifCmtIdNull && ifActIdNull) {
+            appMatters = 1;
+        } else if (ifUserIdNull && ifCmtIdNull && !ifActIdNull) {
+            appMatters = 2;
+        } else {
+            throw new OrderException("invalid number of input ids");
+        }
+
+        if (Objects.equals(userId, complainantId)) {
+            throw new OrderException("cannot complain oneself");
+        } else if (appContent == null || appContent.equals("")) {
+            throw new CommentException("appeal content is empty");
+        } else if (appContent.length() > 1024) {
+            throw new CommentException("appeal length exceeded");
+        }
+
         Appeal appeal = Appeal.builder()
                 .appTime(addAppealRequest.getAppTime())
-                .appMatters(addAppealRequest.getAppMatters())
-                .appContent(addAppealRequest.getAppContent())
-                .userId(addAppealRequest.getUserId())
+                .appMatters(appMatters)
+                .appContent(appContent)
+                .userId(userId)
                 .actId(addAppealRequest.getActId())
                 .cmtId(addAppealRequest.getCmtId())
                 .complainantId(addAppealRequest.getComplainantId())

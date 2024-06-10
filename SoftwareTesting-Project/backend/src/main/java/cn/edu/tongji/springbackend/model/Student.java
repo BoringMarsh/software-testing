@@ -5,6 +5,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class Student {
     private Integer stuId;
     private String stuName;

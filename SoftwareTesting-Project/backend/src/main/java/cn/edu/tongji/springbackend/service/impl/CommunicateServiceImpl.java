@@ -59,6 +59,56 @@ public class CommunicateServiceImpl implements CommunicateService {
     }
 
     @Override
+    public CommentInfo getDetailedCommentByCmtId(int cmtId) {
+        Queue<Integer> openList = new LinkedList<>();
+        Comment root = commentMapper.getByCmtId(cmtId);
+
+        if (root == null) {
+            throw new CommentException("root comment not found");
+        }
+
+        CommentInfo ret = new CommentInfo(
+                root.getCmtId(),
+                root.getCmtContent(),
+                root.getCmtTime(),
+                root.getUserId(),
+                new ArrayList<>()
+        ), pointer = ret;
+        openList.add(cmtId);
+
+        while (!openList.isEmpty()) {
+            final int current = openList.poll();
+            List<Integer> children = commentMapper.getChildIdsByCmtId(current);
+
+            if (current == root.getCmtId() && children.isEmpty()) {
+                throw new CommentException("no children comments");
+            }
+
+            for (Integer child : children) {
+                Comment childComment = commentMapper.getByCmtId(child);
+                CommentInfo childInfo = new CommentInfo(
+                        childComment.getCmtId(),
+                        childComment.getCmtContent(),
+                        childComment.getCmtTime(),
+                        childComment.getUserId(),
+                        new ArrayList<>()
+                );
+                pointer.getChildren().add(childInfo);
+                openList.add(childComment.getCmtId());
+            }
+
+            for (CommentInfo child : pointer.getChildren()) {
+                if (Objects.equals(child.getCmtId(), openList.peek())) {
+                    pointer = child;
+                    break;
+                }
+            }
+        }
+
+        return ret;
+    }
+
+    @Override
     public String getCommentByCmtId(int cmtId) {
         return commentMapper.getByCmtId(cmtId).getCmtContent();
     }
@@ -86,6 +136,25 @@ public class CommunicateServiceImpl implements CommunicateService {
 
     @Override
     public void replyComment(ReplyCommentRequest replyCommentRequest) {
+        Comment father = commentMapper.getByCmtId(replyCommentRequest.getCmtFather());
+
+        if (father == null) {
+            throw new CommentException("replying nonexistent comment");
+        }
+
+        else if (!Objects.equals(father.getActId(), replyCommentRequest.getActId())) {
+            throw new CommentException("activity id not consistent with father");
+        }
+
+        else if (replyCommentRequest.getCmtContent() == null
+                || Objects.equals(replyCommentRequest.getCmtContent(), "")) {
+            throw new CommentException("comment content is empty");
+        }
+
+        else if (replyCommentRequest.getCmtContent().length() > 1024) {
+            throw new CommentException("comment length exceeded");
+        }
+
         commentMapper.add(Comment.builder()
                 .cmtFather(replyCommentRequest.getCmtFather())
                 .cmtContent(replyCommentRequest.getCmtContent())

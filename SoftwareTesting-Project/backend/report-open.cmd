@@ -1,2 +1,2 @@
 @echo off
-allure open .\test-result\unit
+allure open .\src\test\resources\test-result\unit

@@ -3,6 +3,7 @@ package cn.edu.tongji.springbackend.service.impl;
 
 import cn.edu.tongji.springbackend.controller.KeywordsController;
 import cn.edu.tongji.springbackend.dto.*;
+import cn.edu.tongji.springbackend.exceptions.HandleRegRequestException;
 import cn.edu.tongji.springbackend.exceptions.NotFoundException;
 import cn.edu.tongji.springbackend.exceptions.OrderException;
 import cn.edu.tongji.springbackend.mapper.*;
@@ -369,12 +370,27 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void passRegRequest(int userId) {
         User user = userMapper.getUserById(userId);
+
+        if (user == null) {
+            throw new HandleRegRequestException("user not found");
+        } else if (user.getAccountStatus() != 2) {
+            throw new HandleRegRequestException("invalid account status");
+        }
+
         user.setAccountStatus(1);
         userMapper.updateUser(user);
     }
 
     @Override
     public void refuseRegRequest(int userId) {
+        User user = userMapper.getUserById(userId);
+
+        if (user == null) {
+            throw new HandleRegRequestException("user not found");
+        } else if (user.getAccountStatus() != 2) {
+            throw new HandleRegRequestException("invalid account status");
+        }
+
         userMapper.deleteUserById(userId);
     }
 

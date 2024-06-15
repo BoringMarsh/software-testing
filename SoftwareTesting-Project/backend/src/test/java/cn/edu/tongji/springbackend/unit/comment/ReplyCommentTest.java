@@ -98,16 +98,19 @@ public class ReplyCommentTest {
 
     @ParameterizedTest
     @MethodSource("provideReplyCommentTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 用户在社团的活动下方回复已有的评论，作为其子评论
+            - 用户id、活动id、父评论id不能为空，且必须存在
+            - 评论内容不能为空，且长度小于1024字符
+            - 评论时间输入必须符合格式：yyyy-MM-dd HH:mm:ss
+            - 其回复对象id就是其父评论id
+            """)
     @Epic("Comment模块")
     @Feature("回复评论")
     @Story("用户在社团的活动下方回复已有的评论")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("单元测试：回复评论")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("AUTH-123")
-    @TmsLink("TMS-456")
     @Sql(scripts = "/sql/comment_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void replyCommentTest(ReplyCommentTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容

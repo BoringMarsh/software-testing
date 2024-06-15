@@ -115,16 +115,23 @@ public class RegisterTest {
 
     @ParameterizedTest
     @MethodSource("provideRegisterTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 用户输入所需的各项信息并进行注册
+            - 用户名长度为8-16
+            - 密码长度为8-24，且要有大小写和数字
+            - 邮箱长度为1-64
+            - 电话长度为11，且纯数字
+            - 支付密码长度为6，且纯数字
+            - 姓名长度为1-64
+            - 个性签名长度为1-128
+            - 其余信息直接通过选择已有项填入
+            """)
     @Epic("User模块")
     @Feature("注册")
     @Story("游客在注册页面输入各项信息，注册个人用户")
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @DisplayName("单元测试：注册")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("AUTH-123")
-    @TmsLink("TMS-456")
     @Sql(scripts = "/sql/user_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void registerTest(RegisterTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容

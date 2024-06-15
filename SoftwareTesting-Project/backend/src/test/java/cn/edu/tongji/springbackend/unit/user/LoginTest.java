@@ -79,12 +79,16 @@ public class LoginTest {
 
     @ParameterizedTest
     @MethodSource("provideLoginTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 用户输入用户名和密码进行登录，全部正确则登录成功
+            - 输入用户名为空和不存在都会报错：用户不存在
+            - 输入密码为空和不存在，若用户名正确则提示密码错误，若用户名不存在则提示用户不存在
+            """)
     @Epic("User模块")
     @Feature("登录")
     @Story("用户输入用户名和密码登录")
     @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @DisplayName("单元测试：登录")
     @Owner("2151294")
     @Link(name = "Website", url = "https://dev.example.com/")
     @Issue("AUTH-123")

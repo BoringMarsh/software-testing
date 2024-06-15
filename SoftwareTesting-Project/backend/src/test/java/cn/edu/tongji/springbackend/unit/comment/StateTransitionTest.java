@@ -151,12 +151,9 @@ public class StateTransitionTest {
     @Epic("Comment模块")
     @Feature("模块级别状态转换测试")
     @Story("无特定业务故事")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("单元测试：Comment模块状态转换测试")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("AUTH-123")
-    @TmsLink("TMS-456")
     public void stateTransitionTest(StateTransitionTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出

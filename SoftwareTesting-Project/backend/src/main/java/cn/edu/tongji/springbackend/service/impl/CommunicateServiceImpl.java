@@ -118,9 +118,7 @@ public class CommunicateServiceImpl implements CommunicateService {
         if (addCommentRequest.getCmtContent() == null
                 || Objects.equals(addCommentRequest.getCmtContent(), "")) {
             throw new CommentException("comment content is empty");
-        }
-
-        else if (addCommentRequest.getCmtContent().length() > 1024) {
+        } else if (addCommentRequest.getCmtContent().length() > 1024) {
             throw new CommentException("comment length exceeded");
         }
 
@@ -140,18 +138,12 @@ public class CommunicateServiceImpl implements CommunicateService {
 
         if (father == null) {
             throw new CommentException("replying nonexistent comment");
-        }
-
-        else if (!Objects.equals(father.getActId(), replyCommentRequest.getActId())) {
+        } else if (!Objects.equals(father.getActId(), replyCommentRequest.getActId())) {
             throw new CommentException("activity id not consistent with father");
-        }
-
-        else if (replyCommentRequest.getCmtContent() == null
+        } else if (replyCommentRequest.getCmtContent() == null
                 || Objects.equals(replyCommentRequest.getCmtContent(), "")) {
             throw new CommentException("comment content is empty");
-        }
-
-        else if (replyCommentRequest.getCmtContent().length() > 1024) {
+        } else if (replyCommentRequest.getCmtContent().length() > 1024) {
             throw new CommentException("comment length exceeded");
         }
 

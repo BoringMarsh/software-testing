@@ -19,7 +19,7 @@ import java.util.Objects;
 
 import static cn.edu.tongji.springbackend.util.CSVUtils.*;
 import static cn.edu.tongji.springbackend.util.CSVUtils.updateBlock;
-import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_COMMENT;
+import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_ORDER;
 import static cn.edu.tongji.springbackend.util.TimeUtils.getFormatter;
 
 @SpringBootTest
@@ -64,48 +64,51 @@ public class ProcessingRegRequestTest {
 
     /**
      * 测试前置函数，通过读取csv文件返回测试用例对象列表。同时重置相关计数器
-     * @return DeleteCommentTestCase列表
+     * @return ProcessingRegRequestTestCase列表
      */
-    private static List<ProcessingRegRequestTest.ProcessingRegRequestTestCase> provideProcessingRegRequestTestCases() {
-        List<ProcessingRegRequestTest.ProcessingRegRequestTestCase> suite = new ArrayList<>();
-        data = readCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_FILENAME);
+    private static List<ProcessingRegRequestTestCase> provideProcessingRegRequestTestCases() {
+        List<ProcessingRegRequestTestCase> suite = new ArrayList<>();
+        data = readCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_FILENAME);
         total = data.size();
         executed = 1;
 
         for (int i = 1; i < data.size(); i++) {
-            suite.add(new ProcessingRegRequestTest.ProcessingRegRequestTestCase(data.get(i)[COLUMN_USER_ID], data.get(i)[COLUMN_IF_PASSED]);
+            suite.add(new ProcessingRegRequestTestCase(data.get(i)[COLUMN_USER_ID], data.get(i)[COLUMN_IF_PASSED]));
         }
         return suite;
     }
 
     @ParameterizedTest
     @MethodSource("provideProcessingRegRequestTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 管理员审批用户注册申请
+            - 用户注册时在数据库插入一条信息，账户状态置为待审批（Account_status=2）
+            - 审批通过则修改账户状态
+            - 审批被驳回则从数据库中删除账户
+            - 不支持审批不存在的账户申请
+            - 不支持审批待审批状态之外的账户
+            """)
     @Epic("Order模块")
     @Feature("处理注册申请")
     @Story("管理员审批用户注册申请，决定通过或驳回")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("单元测试：处理注册申请")
     @Owner("2154064")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("JIT-1")
-    @TmsLink("TMS-456")
-    public void processingregrequestTest(ProcessingRegRequestTestCase testCase) {
+    public void processingRegRequestTest(ProcessingRegRequestTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
 
         //调取测试方法，获取实际输出
         try {
-            int ifPassed = Integer.parseInt(testCase.getIfPass());
+            int ifPassed = Integer.parseInt(testCase.getIfPassed());
+
             if (ifPassed == 1){
-                profileService.passRegRequest(Integer.valueOf(testCase.getUserId()));
+                profileService.passRegRequest(Integer.parseInt(testCase.getUserId()));
                 actualOutput = "pass register request success";
-            }
-            else if (ifPassed == 0){
-                profileService.refuseRegRequest(Integer.valueOf(testCase.getUserId()));
+            } else if (ifPassed == 0){
+                profileService.refuseRegRequest(Integer.parseInt(testCase.getUserId()));
                 actualOutput = "refuse register request success";
-            }
-            else
+            } else
                 actualOutput = "decision exceeding expectations";
 
         } catch (NumberFormatException e) {
@@ -124,7 +127,7 @@ public class ProcessingRegRequestTest {
 
         //若执行到最后一行，将填入后的数据写入结果csv文件
         if (executed == total - 1)
-            writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
+            writeCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_RESULT_FILENAME, data);
         else
             executed++;
 

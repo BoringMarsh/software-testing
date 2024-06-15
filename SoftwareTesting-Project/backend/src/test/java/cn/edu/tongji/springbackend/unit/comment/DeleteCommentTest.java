@@ -80,16 +80,15 @@ public class DeleteCommentTest {
 
     @ParameterizedTest
     @MethodSource("provideDeleteCommentTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 用户在社团的活动下方删除自己发表的评论。若评论id不存在报错
+            """)
     @Epic("Comment模块")
     @Feature("删除评论")
     @Story("用户在社团的活动下方删除自己发送的评论")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Severity(SeverityLevel.BLOCKER)
+    @DisplayName("单元测试：删除评论")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("JIT-1")
-    @TmsLink("TMS-456")
     @Sql(scripts = "/sql/comment_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void addCommentTest(DeleteCommentTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容

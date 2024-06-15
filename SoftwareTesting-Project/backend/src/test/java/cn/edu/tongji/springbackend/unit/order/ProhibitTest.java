@@ -1,9 +1,7 @@
 package cn.edu.tongji.springbackend.unit.order;
 
 import cn.edu.tongji.springbackend.TestException;
-import cn.edu.tongji.springbackend.service.CommunicateService;
 import cn.edu.tongji.springbackend.service.ProfileService;
-import cn.edu.tongji.springbackend.unit.comment.DeleteCommentTest;
 import io.qameta.allure.*;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -22,7 +19,7 @@ import java.util.Objects;
 
 import static cn.edu.tongji.springbackend.util.CSVUtils.*;
 import static cn.edu.tongji.springbackend.util.CSVUtils.updateBlock;
-import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_COMMENT;
+import static cn.edu.tongji.springbackend.util.PathUtil.TC_PATH_UNIT_ORDER;
 import static cn.edu.tongji.springbackend.util.TimeUtils.getFormatter;
 
 @SpringBootTest
@@ -67,32 +64,36 @@ public class ProhibitTest {
 
     /**
      * 测试前置函数，通过读取csv文件返回测试用例对象列表。同时重置相关计数器
-     * @return DeleteCommentTestCase列表
+     * @return ProhibitTestCase列表
      */
-    private static List<ProhibitTest.ProhibitTestCase> provideProhibitTestCases() {
-        List<ProhibitTest.ProhibitTestCase> suite = new ArrayList<>();
-        data = readCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_FILENAME);
+    private static List<ProhibitTestCase> provideProhibitTestCases() {
+        List<ProhibitTestCase> suite = new ArrayList<>();
+        data = readCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_FILENAME);
         total = data.size();
         executed = 1;
 
         for (int i = 1; i < data.size(); i++) {
-            suite.add(new ProhibitTest.ProhibitTestCase(data.get(i)[COLUMN_USER_ID], data.get(i)[COLUMN_IF_PROHIBITED]);
+            suite.add(new ProhibitTest.ProhibitTestCase(data.get(i)[COLUMN_USER_ID], data.get(i)[COLUMN_IF_PROHIBITED]));
         }
+
         return suite;
     }
 
     @ParameterizedTest
     @MethodSource("provideProhibitTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 管理员通过用户ID封禁用户账号
+            - 用户id、是否封禁不能为空，且必须存在
+            - 不能封禁已被封禁的账户
+            - 不能解封未被封禁的账户
+            - 不能封禁管理员账户
+            """)
     @Epic("Order模块")
     @Feature("封禁用户")
     @Story("管理员根据用户ID更改账户状态")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("单元测试：封禁用户")
     @Owner("2154064")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("JIT-1")
-    @TmsLink("TMS-456")
     public void prohibitTest(ProhibitTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
@@ -100,7 +101,7 @@ public class ProhibitTest {
         //调取测试方法，获取实际输出
         try {
             int ifProhibit = Integer.parseInt(testCase.getIfProhibited());
-            profileService.setUserProhibitedStatus(Integer.valueOf(testCase.getUserId()), ifProhibit == 1);
+            profileService.setUserProhibitedStatus(Integer.parseInt(testCase.getUserId()), ifProhibit == 1);
             actualOutput = "prohibit operation success";
         } catch (NumberFormatException e) {
             actualOutput = e.getMessage().subSequence(0, 20).toString();
@@ -118,7 +119,7 @@ public class ProhibitTest {
 
         //若执行到最后一行，将填入后的数据写入结果csv文件
         if (executed == total - 1)
-            writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
+            writeCsv(TC_PATH_UNIT_ORDER + '/' + TEST_CASE_RESULT_FILENAME, data);
         else
             executed++;
 

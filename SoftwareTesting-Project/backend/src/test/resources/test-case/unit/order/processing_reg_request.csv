@@ -4,6 +4,6 @@ ID,UserId,ifPassed,Expect Output,Actual Output,Result,Analysis Strategy,Time,Per
 3,4,0,invalid account status,,,强一般等价类分析+基本边界值分析,,,
 4,17,0,refuse register request success,,,强一般等价类分析+基本边界值分析,,,
 5,5,0,invalid account status,,,强一般等价类分析+基本边界值分析,,,
-6,,1,user not found,,,弱健壮等价类分析,,,
-7,,0,user not found,,,弱健壮等价类分析,,,
+6,,1,"For input string: """"",,,弱健壮等价类分析,,,
+7,,0,"For input string: """"",,,弱健壮等价类分析,,,
 8,1,3,decision exceeding expectations,,,弱健壮等价类分析,,,

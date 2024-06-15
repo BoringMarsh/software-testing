@@ -54,7 +54,7 @@ public class ActivityPersonalController {
     public ResponseEntity<?> addBrowse(@RequestBody AddBrowseRequest addBrowseRequest) {
         try {
             activityPersonalService.addBrowse(addBrowseRequest);
-            return new ResponseEntity<>("successfully add browse", HttpStatus.OK);
+            return new ResponseEntity<>("successfully add browse", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("add browse failed", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -76,7 +76,7 @@ public class ActivityPersonalController {
     public ResponseEntity<?> addFavour(@RequestParam("stuId") int stuId, @RequestParam("actId") int actId) {
         try {
             activityPersonalService.addFavour(stuId, actId);
-            return new ResponseEntity<>("successfully add favour", HttpStatus.OK);
+            return new ResponseEntity<>("successfully add favour", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("add favour failed", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -120,7 +120,7 @@ public class ActivityPersonalController {
     public ResponseEntity<?> addIndent(@RequestBody AddIndentRequest addIndentRequest) {
         try {
             activityPersonalService.addIndent(addIndentRequest);
-            return new ResponseEntity<>("successfully add indent", HttpStatus.OK);
+            return new ResponseEntity<>("successfully add indent", HttpStatus.CREATED);
         } catch (ActivityFullException e) {
             return new ResponseEntity<>("add indent failed: " + e.getMessage(), HttpStatus.OK);
         } catch (Exception e) {

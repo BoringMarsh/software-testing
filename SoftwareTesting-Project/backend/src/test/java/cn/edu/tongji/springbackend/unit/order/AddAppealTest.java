@@ -100,16 +100,19 @@ public class AddAppealTest {
 
     @ParameterizedTest
     @MethodSource("provideAddAppealTestCases")
-    @Description("This is a test description")
+    @Description("""
+            - 用户对于特定对象（用户、评论、活动等）进行举报
+            - 举报对象id不为空且必须存在，同时只能有一类id不为空且其余为空。例如，如果对用户进行举报，则userId不为空，但评论id、活动id等必须为空，以便系统甄别举报类型
+            - 申诉发起者用户id不为空且必须存在
+            - 有一个参数appealMatters记录举报类型，这是一个整型值，指定了这个举报对象是什么。例如对个人用户的举报为4，对某条评论的举报为2
+            - 若举报的是用户，举报者无法举报自己
+            """)
     @Epic("Order模块")
     @Feature("添加申诉")
-    @Story("- 用户对于特定对象（用户、评论、活动等）进行举报")
-    @Severity(SeverityLevel.CRITICAL)
-    @DisplayName("Test Authentication")
+    @Story("用户对于特定对象（用户、评论、活动等）进行举报")
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("单元测试：添加申诉")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
-    @Issue("AUTH-123")
-    @TmsLink("TMS-456")
     @Sql(scripts = "/sql/appeal_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     public void addAppealTest(AddAppealTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容

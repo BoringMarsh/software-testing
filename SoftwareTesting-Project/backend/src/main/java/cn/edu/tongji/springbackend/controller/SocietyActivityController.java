@@ -26,7 +26,7 @@ public class SocietyActivityController {
             logger.info("start to upload activity");
             logger.info("Successfully received request");
             int actId = societyActivityService.uploadActivity(uploadActReq);
-            return new ResponseEntity<>("successfully upload activity", HttpStatus.OK);
+            return new ResponseEntity<>("successfully upload activity", HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("upload activity failed", HttpStatus.INTERNAL_SERVER_ERROR);

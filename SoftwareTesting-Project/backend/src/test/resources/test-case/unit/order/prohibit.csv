@@ -5,5 +5,5 @@ ID,UserId,ifProhibited,Expect Output,Actual Output,Result,Analysis Strategy,Time
 4,4,0,prohibit operation success,,,强一般等价类分析+基本边界值分析,,,
 5,2,0,unbanning normal user,,,强一般等价类分析+基本边界值分析,,,
 6,6,0,cannot prohibit admin,,,强一般等价类分析+基本边界值分析,,,
-7,,1,user not found,,,弱健壮等价类分析,,,
-8,,0,user not found,,,弱健壮等价类分析,,,
+7,,1,"For input string: """"",,,弱健壮等价类分析,,,
+8,,0,"For input string: """"",,,弱健壮等价类分析,,,

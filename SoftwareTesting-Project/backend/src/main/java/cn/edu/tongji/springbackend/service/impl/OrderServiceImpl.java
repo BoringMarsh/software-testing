@@ -36,6 +36,10 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private FileStorageProperties fileStorageProperties;
 
+    public void func() {
+        System.out.println("hello!");
+    }
+
     @Override
     public GetAppealPageResponse getAppealPage(int timeOrder, int beginNumber, int endNumber) throws IOException {
         List<AppealDetailedInfo> appealDetailedInfos = new ArrayList<>();

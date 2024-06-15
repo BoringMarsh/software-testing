@@ -64,10 +64,12 @@
             <version>3.0.3</version>
             <scope>test</scope>
         </dependency>
+        <!-- 输出日志 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
+        <!-- 加密库 -->
         <dependency>
             <groupId>org.jasypt</groupId>
             <artifactId>jasypt</artifactId>
@@ -85,6 +87,13 @@
             <artifactId>allure-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- 画程序控制流图 -->
+        <dependency>
+            <groupId>org.soot-oss</groupId>
+            <artifactId>soot</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

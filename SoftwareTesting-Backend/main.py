@@ -11,7 +11,7 @@ from hw_telephone import telephone
 from hw_computer import computer
 from decimal import Decimal
 from http import HTTPStatus
-
+from flask_cors import cross_origin
 # Flask应用创建
 app = Flask(__name__)
 
@@ -31,9 +31,12 @@ def make_response(read_time: float, test_time: float, total_count: int, pass_cou
         "passRate": f"{round(float(pass_count) / total_count * 100, 2)}%",
         "data": ast.literal_eval(df.to_json(orient='records'))
     })
+@app.route("/api/test",methods=['POST', 'GET'])
+def msg():
+    return '需要传递给前端的数据'
 
-
-@app.route("/api/hw/triangle")
+@app.route("/api/hw/triangle",methods=['POST', 'GET'])
+#@cross_origin
 def hw_triangle():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间
@@ -204,4 +207,4 @@ def hw_computer():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)

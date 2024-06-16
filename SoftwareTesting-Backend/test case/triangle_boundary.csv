@@ -1,4 +1,4 @@
-ID,A,B,C,Expect Output,Actual Output,Result,Analysis Strategy,Time,Person,Defect Description
+ID,A,B,C,ExpectOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
 1,-2,50,50,edge A is negative,,,健壮边界值测试,,,
 2,0,49,51,edge A can't be 0,,,基本边界值测试,,,
 3,1,50,50,isosceles triangle,,,基本边界值测试,,,

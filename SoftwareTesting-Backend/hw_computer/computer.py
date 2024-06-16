@@ -32,8 +32,4 @@ def computer(host: int, monitor: int, peripheral: int):
     elif sale_volume > 1800:
         proportion = 0.2
 
-    return str(sale_volume * proportion)
-
-
-if __name__ == "__main__":
-    print(computer(13, 26, 40))
+    return sale_volume * proportion

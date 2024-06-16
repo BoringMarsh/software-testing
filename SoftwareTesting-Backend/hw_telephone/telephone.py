@@ -15,6 +15,8 @@ def telephone(minute: int, fail_time: int):
 
     if fail_time < 0:
         return "fail time can't be negative"
+    elif fail_time > 11:
+        return "fail time exceeded"
 
     max_fail_time = 0
     discount = Decimal("0.0")
@@ -36,8 +38,4 @@ def telephone(minute: int, fail_time: int):
         discount = Decimal("0.03")
 
     total_charge = base_charge + minute * charge_per_minute * (1 - (0 if fail_time > max_fail_time else discount))
-    return str(total_charge.normalize())
-
-
-if __name__ == "__main__":
-    print(telephone(3000, 1))
+    return total_charge

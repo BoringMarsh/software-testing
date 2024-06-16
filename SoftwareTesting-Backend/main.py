@@ -1,4 +1,6 @@
 import ast
+import decimal
+
 import flask
 import pandas as pd
 import time
@@ -9,7 +11,6 @@ from hw_triangle import triangle
 from hw_calendar import calendar
 from hw_telephone import telephone
 from hw_computer import computer
-from decimal import Decimal
 from http import HTTPStatus
 
 # Flask应用创建
@@ -31,6 +32,19 @@ def make_response(read_time: float, test_time: float, total_count: int, pass_cou
         "passRate": f"{round(float(pass_count) / total_count * 100, 2)}%",
         "data": ast.literal_eval(df.to_json(orient='records'))
     })
+
+
+def is_decimal_fraction_zero(decimal_number):
+    # 使用 as_tuple 方法获取 Decimal 的元组表示
+    decimal_tuple = decimal_number.as_tuple()
+
+    # 小数部分为零当且仅当指数为零或正数
+    if decimal_tuple.exponent >= 0:
+        return True
+
+    # 检查小数部分是否全为零
+    fractional_part = decimal_tuple.digits[decimal_tuple.exponent:]
+    return all(digit == 0 for digit in fractional_part)
 
 
 @app.route("/api/hw/triangle")
@@ -57,7 +71,10 @@ def hw_triangle():
 
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
-        df.iloc[i, 5] = triangle.triangle(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        raw_result = triangle.triangle(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        format_result = raw_result
+
+        df.iloc[i, 5] = format_result
         df.iloc[i, 8] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         df.iloc[i, 9] = "2151294"
         df.iloc[i, 10] = ""
@@ -100,7 +117,10 @@ def hw_calendar():
 
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
-        df.iloc[i, 5] = calendar.calendar(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        raw_result = calendar.calendar(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        format_result = raw_result
+
+        df.iloc[i, 5] = format_result
         df.iloc[i, 8] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         df.iloc[i, 9] = "2151294"
         df.iloc[i, 10] = ""
@@ -143,13 +163,21 @@ def hw_telephone():
 
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
-        df.iloc[i, 4] = telephone.telephone(df.iloc[i, 1], df.iloc[i, 2])
+        raw_result = telephone.telephone(df.iloc[i, 1], df.iloc[i, 2])
+
+        if type(raw_result) == decimal.Decimal:
+            format_result = str(int(raw_result)) if is_decimal_fraction_zero(raw_result) else str(raw_result.normalize())
+        else:
+            format_result = raw_result
+
+        df.iloc[i, 4] = format_result
         df.iloc[i, 7] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         df.iloc[i, 8] = "2151294"
         df.iloc[i, 9] = ""
 
         # 与预期输出进行比对（pandas读取浮点数时会带多余的0，通过Decimal的normalize去掉）
-        if str(Decimal(str(df.iloc[i, 3])).normalize()) != df.iloc[i, 4]:
+
+        if df.iloc[i, 3] != df.iloc[i, 4]:
             df.iloc[i, 5] = "未通过测试"
         else:
             df.iloc[i, 5] = "通过测试"
@@ -184,7 +212,10 @@ def hw_computer():
     test_start_time = time.time_ns()
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
-        df.iloc[i, 5] = computer.computer(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        raw_result = computer.computer(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        format_result = str(raw_result)
+
+        df.iloc[i, 5] = format_result
         df.iloc[i, 8] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         df.iloc[i, 9] = "2151294"
         df.iloc[i, 10] = ""

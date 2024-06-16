@@ -35,7 +35,3 @@ def calendar(y: int, m: int, d: int):
         ret_d += 1
 
     return f"{ret_y}/{ret_m}/{ret_d}"
-
-
-if __name__ == "__main__":
-    print(calendar(2000, 2, 29))

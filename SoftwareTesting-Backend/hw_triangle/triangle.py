@@ -29,11 +29,3 @@ def triangle(a, b, c):
         return "isosceles triangle"
     else:
         return "normal triangle"
-
-
-if __name__ == "__main__":
-    data = input().split(' ')
-    e1 = int(data[0])
-    e2 = int(data[1])
-    e3 = int(data[2])
-    print(triangle(e1, e2, e3))

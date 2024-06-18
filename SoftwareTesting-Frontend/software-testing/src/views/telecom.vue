@@ -23,29 +23,29 @@
           stripe
           style="width: 100%">
         <el-table-column
-            prop=0
+            prop=ID
             label="序号"
             width="180">
         </el-table-column>
         <el-table-column
-            prop=1
+            prop=Minute
             label="本月通话的分钟数"
             width="180">
         </el-table-column>
         <el-table-column
-            prop=2
+            prop=Failtime
             label="通话时间段的最大容许不按时缴费次数">
         </el-table-column>
         <el-table-column
-            prop=3
+            prop=ExpectedOutput
             label="预期输出">
         </el-table-column>
         <el-table-column
-            prop=4
+            prop=ActualOutput
             label="实际输出">
         </el-table-column>
         <el-table-column
-            prop=5
+            prop=Result
             label="是否通过">
         </el-table-column>
 
@@ -79,7 +79,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData = response;
+      this.tableData = response.data;
     }
   }
 }

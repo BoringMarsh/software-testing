@@ -23,33 +23,33 @@
           stripe
           style="width: 100%">
         <el-table-column
-            prop=0
+            prop=Id
             label="序号"
             width="180">
         </el-table-column>
         <el-table-column
-            prop=1
+            prop=Host
             label="主机"
             width="180">
         </el-table-column>
         <el-table-column
-            prop=2
+            prop=Monitor
             label="外设">
         </el-table-column>
         <el-table-column
-            prop=3
+            prop=Peripheral
             label="显示器">
         </el-table-column>
         <el-table-column
-            prop=4
+            prop=ExpectedOutput
             label="预期输出">
         </el-table-column>
         <el-table-column
-            prop=5
+            prop=ActualOutput
             label="实际输出">
         </el-table-column>
         <el-table-column
-            prop=6
+            prop=Result
             label="是否通过">
         </el-table-column>
 
@@ -83,7 +83,8 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData = response;
+      console.log(1);
+      this.tableData = response.data;
     }
   }
 }

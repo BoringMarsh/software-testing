@@ -83,7 +83,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData = response;
+      this.tableData = response.data;
     }
   }
 }

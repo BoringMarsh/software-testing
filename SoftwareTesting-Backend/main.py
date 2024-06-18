@@ -1,17 +1,17 @@
 import ast
 import decimal
-
-import flask
 import pandas as pd
 import time
 import datetime
-from flask import Flask
+import os
+from flask import *
 from flask_cors import CORS
 from hw_triangle import triangle
 from hw_calendar import calendar
 from hw_telephone import telephone
 from hw_computer import computer
 from http import HTTPStatus
+
 # Flask应用创建
 app = Flask(__name__)
 
@@ -23,7 +23,7 @@ CORS(app, resources=cors_config)
 
 
 def make_response(read_time: float, test_time: float, total_count: int, pass_count: int, df: pd.DataFrame):
-    return flask.jsonify({
+    return jsonify({
         "readTime": read_time,
         "testTime": test_time,
         "total": total_count,
@@ -47,18 +47,18 @@ def is_decimal_fraction_zero(decimal_number):
 
 
 @app.route("/api/hw/triangle", methods=['POST', 'GET'])
-#@cross_origin
 def hw_triangle():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间
+    file = request.files['file']
 
     try:
-        df = pd.read_csv("test case/triangle_boundary.csv")  # 读取测试用例
+        df = pd.read_csv(file.filename, sep=',', header=None)  # 读取测试用例
     except FileNotFoundError:
         response = {
             "message": "test case not found"
         }
-        return flask.jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
+        return jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
 
     read_time = round(float(time.time_ns() - read_start_time) / 1000000000, 4)  # 计算读取时间
     # ------------------------------------------------------------------------------------ #
@@ -105,7 +105,7 @@ def hw_calendar():
         response = {
             "message": "test case not found"
         }
-        return flask.jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
+        return jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
 
     read_time = round(float(time.time_ns() - read_start_time) / 1000000000, 4)  # 计算读取时间
     # ------------------------------------------------------------------------------------ #
@@ -151,7 +151,7 @@ def hw_telephone():
         response = {
             "message": "test case not found"
         }
-        return flask.jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
+        return jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
 
     read_time = round(float(time.time_ns() - read_start_time) / 1000000000, 4)  # 计算读取时间
     # ------------------------------------------------------------------------------------ #
@@ -202,7 +202,7 @@ def hw_computer():
         response = {
             "message": "test case not found"
         }
-        return flask.jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
+        return jsonify(response), HTTPStatus.NOT_FOUND  # 文件不存在，报404错误
 
     read_time = round(float(time.time_ns() - read_start_time) / 1000000000, 4)  # 计算读取时间
     # ------------------------------------------------------------------------------------ #

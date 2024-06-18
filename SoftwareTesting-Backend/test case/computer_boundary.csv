@@ -1,4 +1,4 @@
-Id,Host,Monitor,Peripheral,Expected Output,Actual Output,Result,Analysis Strategy,Time,Person,Defect Description
+Id,Host,Monitor,Peripheral,ExpectedOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
 1,0,0,0,host must be positive,,,健壮边界值分析,,,
 2,1,0,0,monitor must be positive,,,健壮边界值分析,,,
 3,1,1,0,peripheral must be positive,,,健壮边界值分析,,,

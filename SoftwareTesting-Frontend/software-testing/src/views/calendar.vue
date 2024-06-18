@@ -5,7 +5,7 @@
       <h1>Question4: 万年历问题</h1>
       <el-upload
           class="upload-demo"
-          action="http://localhost:5000/question4"
+          action="http://localhost:5001/api/hw/calendar"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -24,31 +24,31 @@
           stripe
           style="width: 100%">
         <el-table-column
-            prop=0
+            prop=ID
             label="序号">
         </el-table-column>
         <el-table-column
-            prop=1
+            prop=Year
             label="年">
         </el-table-column>
         <el-table-column
-            prop=2
+            prop=Month
             label="月">
         </el-table-column>
         <el-table-column
-            prop=3
+            prop=Day
             label="日">
         </el-table-column>
         <el-table-column
-            prop=4
+            prop=ExpectOutput
             label="预期输出">
         </el-table-column>
         <el-table-column
-            prop=5
+            prop=ActualOutput
             label="实际输出">
         </el-table-column>
         <el-table-column
-            prop=6
+            prop=Result
             label="是否通过">
         </el-table-column>
 

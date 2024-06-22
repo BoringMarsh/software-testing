@@ -1,11 +1,10 @@
 <template>
-
   <div style="margin-left: 50px;margin-right:50px;text-align: left;width: 100%;">
     <div style="width: 250px;">
-      <h1>Question4: 万年历问题</h1>
+      <h1>Question2: 电信收费问题</h1>
       <el-upload
           class="upload-demo"
-          action="http://localhost:5001/api/hw/calendar"
+          action="http://localhost:5001/api/hw/telephone"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -20,27 +19,25 @@
     </div>
     <div>
       <el-table
-          :data="tableData"
+          :data="showData"
           stripe
           style="width: 100%">
         <el-table-column
             prop=ID
-            label="序号">
+            label="序号"
+            width="180">
         </el-table-column>
         <el-table-column
-            prop=Year
-            label="年">
+            prop=Minute
+            label="本月通话的分钟数"
+            width="180">
         </el-table-column>
         <el-table-column
-            prop=Month
-            label="月">
+            prop=Failtime
+            label="通话时间段的最大容许不按时缴费次数">
         </el-table-column>
         <el-table-column
-            prop=Day
-            label="日">
-        </el-table-column>
-        <el-table-column
-            prop=ExpectOutput
+            prop=ExpectedOutput
             label="预期输出">
         </el-table-column>
         <el-table-column
@@ -55,28 +52,54 @@
       </el-table>
     </div>
   </div>
-
 </template>
 
 <script>
+import { ElUpload, ElButton, ElTable, ElTableColumn } from 'element-plus';
 export default {
-  name: "computerSell",
+  name: "telecom",
+  components: {
+    "el-upload": ElUpload,
+    "el-button": ElButton,
+    "el-table": ElTable,
+    "el-table-column": ElTableColumn
+  },
   data() {
     return {
-      tableData: [[]],
+      filenum:0,
+      showData:[],
+      tableData: [],
       fileList: [],
-      filenum:0
+      testTime:[],
+      readTime:[],
+      Passes:[]
     };
   },
   methods: {
     handleRemove(file, fileList) {
-    console.log('File removed, clearing table data'); // 添加这行用于调试
-    this.tableData[this.filenum] = [];
-  console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
+     this.$nextTick(() => {
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.tableData[index]=[];
+      this.fileList.splice(index,1)
+      this.file_num--;
+    }
+    console.log(index, this.fileList);
+  });
+  this.showData=[]
+       console.log(file,fileList)
+},
+      
+handlePreview(file) {
+  this.$nextTick(() => {
+    // 假设我们使用文件的 name 属性来匹配
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.showData = this.tableData[index];
+    }
+    console.log(index, this.fileList);
+  });
+},
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 100 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
@@ -84,13 +107,14 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
+
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-
-      this.tableData[this.filenum] = response.data;
-      console.log(this.filenum);
-      console.log(11111111111111111111111111);
-      this.filenum=this.filenum+1;
+      this.tableData[this.file_num]= response.data;
+      this.showData=response.data;
+      this.fileList.push(file);
+      this.file_num=this.file_num+1;
+      console.log(this.file_num,fileList)
 
     }
   }

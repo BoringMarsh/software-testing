@@ -13,11 +13,14 @@
  
 <script>
 import Aside from '../components/Aside.vue';
+import { ElContainer, ElMain } from 'element-plus';
 //import Header from '../components/Header.vue';
  
 export default {
   components: {
     Aside,
+    "el-container": ElContainer,
+    "el-main": ElMain
   },
   data() {
     return {

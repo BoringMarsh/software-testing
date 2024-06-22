@@ -10,6 +10,7 @@ public interface CommunicateService {
     List<CommentInfo> getCommentByActId(int actId);
     CommentInfo getDetailedCommentByCmtId(int cmtId);
     String getCommentByCmtId(int cmtId);
+    void addCommentD1(AddCommentRequest addCommentRequest);
     void addComment(AddCommentRequest addCommentRequest);
     void replyComment(ReplyCommentRequest replyCommentRequest);
     void deleteComment(int cmtId);

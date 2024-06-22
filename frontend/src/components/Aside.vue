@@ -32,13 +32,18 @@
    </template>
     
    <script>
-  import {
-        getCurrentInstance,
-        onMounted
-    } from 'vue';
+  import { getCurrentInstance, onMounted } from 'vue';
+  import { ElAside, ElMenu, ElMenuItem, ElSubMenu, ElIcon } from 'element-plus';
     
     export default {
         name: 'layout',
+        components: {
+          "el-aside": ElAside,
+          "el-menu": ElMenu,
+          "el-menu-item": ElMenuItem,
+          "el-submenu": ElSubMenu,
+          "el-icon": ElIcon
+        },
         setup(){
             const {proxy} = getCurrentInstance()
             onMounted(()=>{

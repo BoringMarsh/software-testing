@@ -25,8 +25,14 @@
 </template>
 
 <script>
+import { ElSelect, ElOption } from 'element-plus';
+
 export default {
-  name:"unitTest",
+  name: "unitTest",
+  components: {
+    "el-select": ElSelect,
+    "el-option": ElOption
+  },
   data() {
     return {
       options: ['User', 'Exam'],

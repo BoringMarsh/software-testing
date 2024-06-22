@@ -43,7 +43,7 @@
 
       <div>
         <el-table
-          :data="tableData"
+          :data="showData"
           stripe
           style="width: 100%">
           <el-table-column
@@ -88,15 +88,30 @@
 
 </template>
 <script>
-import axios from 'axios'
+import { ElUpload, ElButton, ElTable, ElTableColumn, ElForm, ElFormItem, ElFooter, ElContainer, ElTabs, ElTabPane, ElInput } from 'element-plus';
+import axios from 'axios';
 
 export default {
   name: "triangle",
+  components: {
+    "el-upload": ElUpload,
+    "el-button": ElButton,
+    "el-table": ElTable,
+    "el-table-column": ElTableColumn,
+    "el-form": ElForm,
+    "el-form-item": ElFormItem,
+    "el-footer": ElFooter,
+    "el-container": ElContainer,
+    "el-tabs": ElTabs,
+    "el-tab-pane": ElTabPane,
+    "el-input": ElInput
+  },
   data() {
     return {
       file_num:0,
       uploadActionUrl:'',
       tableData:[[]],
+      showData:[],
       fileList: [],
       form: {
         edge1: '',
@@ -143,12 +158,29 @@ export default {
           this.$message.warning ("不是三角形")
     },
     handleRemove(file, fileList) {
-      this.tableData=[];
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
+     this.$nextTick(() => {
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.tableData[index]=[];
+      this.fileList.splice(index,1)
+      this.file_num--;
+    }
+    console.log(index, this.fileList);
+  });
+  this.showData=[]
+       console.log(file,fileList)
+},
+      
+handlePreview(file) {
+  this.$nextTick(() => {
+    // 假设我们使用文件的 name 属性来匹配
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.showData = this.tableData[index];
+    }
+    console.log(index, this.fileList);
+  });
+},
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 100 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
@@ -159,9 +191,11 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData[this.file_num] = response.data;
-      console.log(this.tableData);
+      this.tableData[this.file_num]= response.data;
+      this.showData=response.data;
+      this.fileList.push(file);
       this.file_num=this.file_num+1;
+      console.log(this.file_num,fileList)
 
     }
   }

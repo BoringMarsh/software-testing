@@ -108,6 +108,7 @@ public class AddCommentTest {
     @DisplayName("单元测试：添加评论")
     @Owner("2151294")
     @Sql(scripts = "/sql/comment_reset.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Issue("JIT-1")
     public void addCommentTest(AddCommentTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
@@ -138,18 +139,25 @@ public class AddCommentTest {
         updateBlock(data, executed, COLUMN_TIME, LocalDateTime.now().format(getFormatter()));
         updateBlock(data, executed, COLUMN_PERSON, TEST_PERSON);
 
-        //若执行到最后一行，将填入后的数据写入结果csv文件
-        if (executed == total - 1)
-            writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
-        else
-            executed++;
-
         //根据比对结果填入测试结果，以及若不通过则直接抛出未通过异常，给后续报告捕获该信息
         if (result) {
             updateBlock(data, executed, COLUMN_RESULT, "通过测试");
         } else {
             updateBlock(data, executed, COLUMN_RESULT, "未通过测试");
+
+            //若执行到最后一行，将填入后的数据写入结果csv文件
+            if (executed == total - 1)
+                writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
+            else
+                executed++;
+
             throw new TestException(executed, line[COLUMN_EXPECTED_OUTPUT], actualOutput);
         }
+
+        //若执行到最后一行，将填入后的数据写入结果csv文件
+        if (executed == total - 1)
+            writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
+        else
+            executed++;
     }
 }

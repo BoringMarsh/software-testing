@@ -19,7 +19,7 @@
     </div>
     <div>
       <el-table
-          :data="tableData"
+          :data="showData"
           stripe
           style="width: 100%">
         <el-table-column
@@ -59,22 +59,47 @@
 </template>
 
 <script>
+import { ElUpload, ElButton, ElTable, ElTableColumn } from 'element-plus';
 export default {
   name: "computerSell",
+  components: {
+    "el-upload": ElUpload,
+    "el-button": ElButton,
+    "el-table": ElTable,
+    "el-table-column": ElTableColumn
+  },
   data() {
     return {
+      showData:[],
       tableData: [],
       fileList: []
     };
   },
   methods: {
     handleRemove(file, fileList) {
-      this.tableData=[];
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
+     this.$nextTick(() => {
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.tableData[index]=[];
+      this.fileList.splice(index,1)
+      this.file_num--;
+    }
+    console.log(index, this.fileList);
+  });
+  this.showData=[]
+       console.log(file,fileList)
+},
+      
+handlePreview(file) {
+  this.$nextTick(() => {
+    // 假设我们使用文件的 name 属性来匹配
+    const index = this.fileList.findIndex(f => f.name === file.name);
+    if (index !== -1 && index <= this.file_num) {
+      this.showData = this.tableData[index];
+    }
+    console.log(index, this.fileList);
+  });
+},
     handleExceed(files, fileList) {
       this.$message.warning(`当前限制选择 100 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
@@ -82,10 +107,15 @@ export default {
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
+
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      console.log(1);
-      this.tableData = response.data;
+      this.tableData[this.file_num]= response.data;
+      this.showData=response.data;
+      this.fileList.push(file);
+      this.file_num=this.file_num+1;
+      console.log(this.file_num,fileList)
+
     }
   }
 }

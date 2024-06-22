@@ -42,25 +42,12 @@ const router = createRouter({
           path: '/unitTest',
           name: '单元测试',
           component: () => import('@/views/unitTest.vue')
-        },
-        {
-          path: '/hello',
-          name: 'hello',
-          component: () => import('@/components/HelloWorld.vue')
         }
       ],
       meta: {
         index: 1
       }
-    },
-    {
-      path: '/hello',
-      name: 'HelloWorld',
-      component: () => import( /* webpackChunkName: "hello" */ '@/components/HelloWorld.vue'),
-      meta: {
-        index: 1
-      }
-    },
+    }
   ]
 })
 

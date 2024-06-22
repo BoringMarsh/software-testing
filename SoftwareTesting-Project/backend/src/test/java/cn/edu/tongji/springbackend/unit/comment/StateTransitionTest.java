@@ -157,7 +157,6 @@ public class StateTransitionTest {
     public void stateTransitionTest(StateTransitionTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出
-        System.out.println(testCase);
 
         //调取测试方法，获取实际输出
         try {

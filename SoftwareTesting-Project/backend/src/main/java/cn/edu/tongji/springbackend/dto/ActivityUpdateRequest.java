@@ -17,8 +17,12 @@ public class ActivityUpdateRequest {
     private String actIntro;
     private String actLocation;
     private Double ticketPrice;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regStartTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regEndTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime actTime;
     private Integer actCapacity;
     private List<String> actKeywords;

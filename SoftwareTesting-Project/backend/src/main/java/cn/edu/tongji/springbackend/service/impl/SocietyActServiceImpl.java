@@ -87,7 +87,7 @@ public class SocietyActServiceImpl implements SocietyActivityService {
             processActivityKeywords(activity.getActId(), uploadActReq.getKeyword());
             logger.info("Successfully inserted actKeywords with ID: {}", activity.getActId());
 
-            processActivityImages(activity.getActId(), uploadActReq.getBase64ActImages());
+            //processActivityImages(activity.getActId(), uploadActReq.getBase64ActImages());
             logger.info("Successfully inserted actImages with ID: {}", activity.getActId());
 
             return activity.getActId();
@@ -120,6 +120,7 @@ public class SocietyActServiceImpl implements SocietyActivityService {
             }
         }
     }
+
     private String saveImage(String base64Image) {
         try {
             // Specify the directory where you want to store images
@@ -242,7 +243,8 @@ public class SocietyActServiceImpl implements SocietyActivityService {
                 List<String> imageBase64List = new ArrayList<>();
                 List<ActivityImage> activityImages = activityImageMapper.getActivityImagesByActId(actId);
                 for (ActivityImage image : activityImages) {
-                    String imageBase64 = readAndConvertToBase64(image.getActImage());
+                    //String imageBase64 = readAndConvertToBase64(image.getActImage());
+                    String imageBase64 = "imageBase64";
                     imageBase64 = "data:image/jpg;base64," + imageBase64;
                     imageBase64List.add(imageBase64);
                 }
@@ -294,7 +296,7 @@ public class SocietyActServiceImpl implements SocietyActivityService {
         updateActivityKeywords(request.getActId(), request.getActKeywords());
 
         // 更新活动图片
-        updateActivityImages(request.getActId(), request.getBase64ActImages());
+        //updateActivityImages(request.getActId(), request.getBase64ActImages());
 
     }
 
@@ -305,7 +307,7 @@ public class SocietyActServiceImpl implements SocietyActivityService {
 
     private void updateActivityImages(Integer actId, List<String> base64Images) {
         deleteOldActivityImages(actId); // Deletes images from filesystem and database
-        processActivityImages(actId, base64Images);
+        //processActivityImages(actId, base64Images);
     }
 
     private void deleteOldActivityImages(Integer actId) {

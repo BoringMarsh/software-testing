@@ -90,9 +90,7 @@ public class LoginTest {
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("单元测试：登录")
     @Owner("2151294")
-    @Link(name = "Website", url = "https://dev.example.com/")
     @Issue("AUTH-123")
-    @TmsLink("TMS-456")
     public void loginTest(LoginTestCase testCase) {
         String[] line = data.get(executed);  //获取测试用例csv文件中的当前行，方便填入内容
         String actualOutput;                 //实际输出

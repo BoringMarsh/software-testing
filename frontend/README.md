@@ -1,4 +1,4 @@
-# conary-front
+# frontend
 
 ## Project setup
 ```

@@ -114,6 +114,24 @@ public class CommunicateServiceImpl implements CommunicateService {
     }
 
     @Override
+    @Deprecated
+    public void addCommentD1(AddCommentRequest addCommentRequest) {
+        if (addCommentRequest.getCmtContent() == null
+                || Objects.equals(addCommentRequest.getCmtContent(), "")) {
+            throw new CommentException("comment content is empty");
+        }
+
+        commentMapper.add(Comment.builder()
+                .cmtFather(0)
+                .cmtContent(addCommentRequest.getCmtContent())
+                .cmtTime(addCommentRequest.getCmtTime())
+                .actId(addCommentRequest.getActId())
+                .userId(addCommentRequest.getUserId())
+                .build()
+        );
+    }
+
+    @Override
     public void addComment(AddCommentRequest addCommentRequest) {
         if (addCommentRequest.getCmtContent() == null
                 || Objects.equals(addCommentRequest.getCmtContent(), "")) {

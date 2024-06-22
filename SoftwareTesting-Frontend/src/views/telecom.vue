@@ -1,11 +1,10 @@
 <template>
-
   <div style="margin-left: 50px;margin-right:50px;text-align: left;width: 100%;">
     <div style="width: 250px;">
-      <h1>Question4: 万年历问题</h1>
+      <h1>Question2: 电信收费问题</h1>
       <el-upload
           class="upload-demo"
-          action="http://localhost:5001/api/hw/calendar"
+          action="http://localhost:5001/api/hw/telephone"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
@@ -25,22 +24,20 @@
           style="width: 100%">
         <el-table-column
             prop=ID
-            label="序号">
+            label="序号"
+            width="180">
         </el-table-column>
         <el-table-column
-            prop=Year
-            label="年">
+            prop=Minute
+            label="本月通话的分钟数"
+            width="180">
         </el-table-column>
         <el-table-column
-            prop=Month
-            label="月">
+            prop=Failtime
+            label="通话时间段的最大容许不按时缴费次数">
         </el-table-column>
         <el-table-column
-            prop=Day
-            label="日">
-        </el-table-column>
-        <el-table-column
-            prop=ExpectOutput
+            prop=ExpectedOutput
             label="预期输出">
         </el-table-column>
         <el-table-column
@@ -55,12 +52,11 @@
       </el-table>
     </div>
   </div>
-
 </template>
 
 <script>
 export default {
-  name: "computerSell",
+  name: "telecom",
   data() {
     return {
       tableData: [],
@@ -69,6 +65,7 @@ export default {
   },
   methods: {
     handleRemove(file, fileList) {
+      this.tableData=[];
       console.log(file, fileList);
     },
     handlePreview(file) {

@@ -14,7 +14,7 @@
                <span title>系统首页</span>
              </el-menu-item>
              <el-submenu index="2">
-               <template #title><i class="el-icon-menu"></i><span>平时题目</span></template>
+               <template #title><i class="el-icon-menu"></i><span>平时题目fwef</span></template>
 
                         <el-menu-item index="/triangle">三角形问题</el-menu-item>
                         <el-menu-item index="/telecom">电信收费问题</el-menu-item>

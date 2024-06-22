@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     handleRemove(file, fileList) {
+      this.tableData=[];
       console.log(file, fileList);
     },
     handlePreview(file) {

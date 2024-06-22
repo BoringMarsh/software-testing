@@ -94,8 +94,9 @@ export default {
   name: "triangle",
   data() {
     return {
+      file_num:0,
       uploadActionUrl:'',
-      tableData: [],
+      tableData:[[]],
       fileList: [],
       form: {
         edge1: '',
@@ -142,6 +143,7 @@ export default {
           this.$message.warning ("不是三角形")
     },
     handleRemove(file, fileList) {
+      this.tableData=[];
       console.log(file, fileList);
     },
     handlePreview(file) {
@@ -157,8 +159,9 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData = response.data;
+      this.tableData[this.file_num] = response.data;
       console.log(this.tableData);
+      this.file_num=this.file_num+1;
 
     }
   }

@@ -1,4 +1,4 @@
-ID,A,B,C,Expect Output,Actual Output,Result,Analysis Strategy,Person,Defect Description
+ID,A,B,C,ExpectOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
 1,25,25,25,equilateral triangle,,,弱一般等价类测试,,
 2,62,62,50,isosceles triangle,,,弱一般等价类测试,,
 3,9,10,11,normal triangle,,,弱一般等价类测试,,

@@ -51,9 +51,11 @@ def hw_triangle():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间
     file = request.files['file']
+    src_path = os.getcwd() + '/test case/' + file.filename
+    result_path = os.getcwd() + '/test result/calendar_result.csv'
 
     try:
-        df = pd.read_csv(file.filename, sep=',', header=None)  # 读取测试用例
+        df = pd.read_csv(src_path)  # 读取测试用例
     except FileNotFoundError:
         response = {
             "message": "test case not found"
@@ -90,17 +92,20 @@ def hw_triangle():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test result/triangle_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv(result_path)  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
-@app.route("/api/hw/calendar")
+@app.route("/api/hw/calendar", methods=['POST', 'GET'])
 def hw_calendar():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间
+    file = request.files['file']
+    src_path = os.getcwd() + '/test case/' + file.filename
+    result_path = os.getcwd() + '/test result/calendar_result.csv'
 
     try:
-        df = pd.read_csv("test case/calendar_boundary.csv")  # 读取测试用例
+        df = pd.read_csv(src_path)  # 读取测试用例
     except FileNotFoundError:
         response = {
             "message": "test case not found"
@@ -118,7 +123,7 @@ def hw_calendar():
 
     for i in range(total_count):
         # 进行测试，结果填入当前行的结果列
-        raw_result = calendar.calendar(df.iloc[i, 1], df.iloc[i, 2], df.iloc[i, 3])
+        raw_result = calendar.calendar(int(df.iloc[i, 1]), int(df.iloc[i, 2]), int(df.iloc[i, 3]))
         format_result = raw_result
 
         df.iloc[i, 5] = format_result
@@ -136,11 +141,11 @@ def hw_calendar():
     test_time = round(float(time.time_ns() - test_start_time) / 1000000000, 4)  # 计算测试时间
     # ------------------------------------------------------------------------------------ #
 
-    df.to_csv("test result/calendar_result.csv")  # 将测试结果及比对结果写回表格
+    df.to_csv(result_path)  # 将测试结果及比对结果写回表格
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
-@app.route("/api/hw/telephone")
+@app.route("/api/hw/telephone",methods=['POST', 'GET'])
 def hw_telephone():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间
@@ -191,7 +196,7 @@ def hw_telephone():
     return make_response(read_time, test_time, total_count, pass_count, df)  # 将表格信息返回给前端
 
 
-@app.route("/api/hw/computer")
+@app.route("/api/hw/computer",methods=['POST', 'GET'])
 def hw_computer():
     # ----------------------------------- 读取测试用例 ----------------------------------- #
     read_start_time = time.time_ns()  # 初始时间

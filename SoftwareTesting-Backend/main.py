@@ -18,7 +18,7 @@ app = Flask(__name__)
 cors_config = {
     r"/api/*": {"origins": "*"}  # 允许来自所有地址到/api/*的请求
 }
-CORS(app, resources=cors_config)
+CORS(app, resources=cors_config) 
 
 
 def make_response(read_time: float, test_time: float, total_count: int, pass_count: int, df: pd.DataFrame):
@@ -27,7 +27,7 @@ def make_response(read_time: float, test_time: float, total_count: int, pass_cou
         "testTime": test_time,
         "total": total_count,
         "pass": pass_count,
-        "passRate": f"{round(float(pass_count) / total_count * 100, 2)}%",
+        "passRate": float(pass_count) / total_count ,
         "data": ast.literal_eval(df.to_json(orient='records'))
     })
 

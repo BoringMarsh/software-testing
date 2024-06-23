@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: 'home',
+        name: 'hoMe',
         data() {
             const item = {
                 date: '2016-05-02',

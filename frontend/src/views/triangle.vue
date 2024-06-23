@@ -1,7 +1,7 @@
 <template>
    <button @click="test()">测试按钮</button>
  <div class='container'>
-   <el-container style="width: 100%; height: 5000px">
+   <el-container style="width: 100%; height: 500px">
     <h1 style="font-size:18px" class="header">Question1:判断三角形类型</h1>
     <el-footer style="margin-left: 30px">
        <el-tabs type="border-card" style="width: 70%; height: 350px">
@@ -83,16 +83,16 @@
     </div>
     </el-footer>
    </el-container>
-
+   <div id="myChart123" :style="{width: '1500px', height: '350px'}"></div>
  </div>
 
 </template>
 <script>
 import { ElUpload, ElButton, ElTable, ElTableColumn, ElForm, ElFormItem, ElFooter, ElContainer, ElTabs, ElTabPane, ElInput } from 'element-plus';
 import axios from 'axios';
-
+import * as echarts from 'echarts';
 export default {
-  name: "triangle",
+  name: "trianGle",
   components: {
     "el-upload": ElUpload,
     "el-button": ElButton,
@@ -108,11 +108,16 @@ export default {
   },
   data() {
     return {
-      file_num:0,
       uploadActionUrl:'',
-      tableData:[[]],
-      showData:[],
+      showData: [],
+      tableData: [[]],
       fileList: [],
+      filenum: 0,
+      testtime: [],
+      readtime: [],
+      filename: [],
+      passes: [],
+      index:0,
       form: {
         edge1: '',
         edge2: '',
@@ -121,14 +126,6 @@ export default {
     }
   },
   methods: {
-    test(){
-      axios.get('http://localhost:5001/api/test').
-  then(res=>{
-    console.log(res)
-  })
-
-
-    },
     onClick() {
       var a = parseFloat(this.form.edge1)
       var b = parseFloat(this.form.edge2)
@@ -158,48 +155,114 @@ export default {
           this.$message.warning ("不是三角形")
     },
     handleRemove(file, fileList) {
-     this.$nextTick(() => {
-    const index = this.fileList.findIndex(f => f.name === file.name);
-    if (index !== -1 && index <= this.file_num) {
-      this.tableData[index]=[];
-      this.fileList.splice(index,1)
-      this.file_num--;
-    }
-    console.log(index, this.fileList);
-  });
-  this.showData=[]
-       console.log(file,fileList)
-},
-      
-handlePreview(file) {
-  this.$nextTick(() => {
-    // 假设我们使用文件的 name 属性来匹配
-    const index = this.fileList.findIndex(f => f.name === file.name);
-    if (index !== -1 && index <= this.file_num) {
-      this.showData = this.tableData[index];
-    }
-    console.log(index, this.fileList);
-  });
-},
+      this.$nextTick(() => {
+        this.index = this.fileList.findIndex(f => f.name === file.name);
+        if (this.index !== -1 && this.index <= this.filenum) {
+          this.tableData[this.index] = [];
+          this.fileList.splice(this.index, 1);
+          this.filenum--;
+        }
+        console.log(this.index, this.fileList);
+      });
+      this.showData = [];
+      console.log(file, fileList);
+      this.updateChart();
+    },
+    handlePreview(file) {
+      this.$nextTick(() => {
+        this.index = this.fileList.findIndex(f => f.name === file.name);
+        if (this.index !== -1 && this.index <= this.filenum) {
+          this.showData = this.tableData[this.index];
+          console.log(this.showData)
+        }
+        console.log(this.passes[this.index]);
+        this.updateChart();
+      });
+    },
     handleExceed(files, fileList) {
-      this.$message.warning(`当前限制选择 100 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      this.$message.warning(`当前限制选择 100 个文件，本次选择了${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
     },
-    // eslint-disable-next-line no-unused-vars
     beforeRemove(file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`);
+      return this.$confirm(`确定移除${file.name}？`);
     },
-
-    // eslint-disable-next-line no-unused-vars
     Success(response, file, fileList) {
-      this.tableData[this.file_num]= response.data;
-      this.showData=response.data;
+      this.tableData[this.filenum]=(response.data);
+      this.showData = response.data;
       this.fileList.push(file);
-      this.file_num=this.file_num+1;
-      console.log(this.file_num,fileList)
+      this.index=this.filenum = this.filenum + 1;
+      this.filename.push(this.filenum);
+      this.testtime.push(response.testTime);
+      this.readtime.push(response.readTime);
+      this.passes.push(response.passRate);      
+      this.updateChart();
 
+    },
+    updateChart() {
+      let myChart = echarts.init(document.getElementById("myChart123"));
+      let option = {
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['测试时间', '读取时间', '通过率', '不通过率']
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+            dataView: {},
+            magicType: {
+              type: ['line', 'bar', 'stack', 'tiled', 'pie']
+            }
+          }
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: this.filename
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            name: '测试时间',
+            type: 'line',
+            data: this.testtime
+          },
+          {
+            name: '读取时间',
+            type: 'line',
+            data: this.readtime
+          },
+          {
+            name: '通过率',
+            type: 'pie',
+            radius: '50%',
+            center: ['25%', '50%'],
+            data: [
+              { value: this.passes[this.index], name: '通过率' },
+              { value: 1 - this.passes[this.index], name: '不通过率' }
+            ],
+            label: {
+              formatter: '{b}: {d}%'
+            },
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+              }
+            }
+          }
+        ]
+      };
+      myChart.setOption(option);
     }
+  },
+  mounted() {
+    this.updateChart();
   }
-}
+};
 </script>
 
 <style scoped>

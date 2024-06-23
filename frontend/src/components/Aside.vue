@@ -25,7 +25,7 @@
                <template #title><i class="el-icon-menu"></i><span>期末项目</span></template>
                          <el-menu-item index="/unitTest">单元测试</el-menu-item>
                         <el-menu-item index="2.2">集成测试</el-menu-item>
-                        <el-menu-item index="2.3">系统测试</el-menu-item>
+                        <el-menu-item index="/systemTest">系统测试</el-menu-item>
              </el-submenu>
            </el-menu>
          </el-aside>

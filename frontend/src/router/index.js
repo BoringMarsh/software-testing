@@ -42,6 +42,11 @@ const router = createRouter({
           path: '/unitTest',
           name: '单元测试',
           component: () => import('@/views/unitTest.vue')
+        },
+        {
+          path: '/systemTest',
+          name: '系统测试',
+          component: () => import('@/views/systemTest.vue')
         }
       ],
       meta: {

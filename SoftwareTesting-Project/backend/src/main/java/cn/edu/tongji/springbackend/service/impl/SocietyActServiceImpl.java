@@ -388,14 +388,14 @@ public class SocietyActServiceImpl implements SocietyActivityService {
 
         // 处理uploadTime条件
         if (criteria.getUploadTime() != null) {
-            LocalDate uploadDate = LocalDate.parse(criteria.getUploadTime());
+            LocalDate uploadDate = LocalDate.from(criteria.getUploadTime());
             logger.info("Successfully arrived 2");
             if (!activity.getUploadTime().toLocalDate().isEqual(uploadDate)) return false;
         }
 
         // 处理regEndTime条件
         if (criteria.getRegEndTime() != null) {
-            LocalDate regEndDate = LocalDate.parse(criteria.getRegEndTime());
+            LocalDate regEndDate = LocalDate.from(criteria.getRegEndTime());
             logger.info("Successfully arrived 3");
             if (!activity.getRegEndTime().toLocalDate().isEqual(regEndDate)) return false;
         }

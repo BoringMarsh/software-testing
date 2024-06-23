@@ -1,7 +1,6 @@
 package cn.edu.tongji.springbackend.mapper;
 
 import cn.edu.tongji.springbackend.model.Activity;
-import cn.edu.tongji.springbackend.model.Student;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

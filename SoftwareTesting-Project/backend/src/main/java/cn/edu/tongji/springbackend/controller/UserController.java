@@ -34,6 +34,7 @@ public class UserController {
             logger.info("Successfully registered");
             return new ResponseEntity<>(Map.of("message", "success", "user_ID", user_id), HttpStatus.CREATED);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(Map.of("message", "failed to register student"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

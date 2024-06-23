@@ -16,6 +16,7 @@
               :src="require('../../../public/Logo.png')"
               style="height: 60px;width: 180px;"
               ></el-image>
+          <p id="student-home-title"> 学生端主页 </p>
           <div class="flex-grow" />
           <el-menu-item index='/home/recommendation'  class="menuItem" > <el-icon><Present /></el-icon> 首页</el-menu-item>
           <el-menu-item index='/home/search' class="menuItem"><el-icon><Search /></el-icon> 搜索</el-menu-item>

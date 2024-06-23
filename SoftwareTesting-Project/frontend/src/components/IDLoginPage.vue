@@ -4,14 +4,15 @@
       <div id="hiddenContainer1" style="display:none;"></div>  -->
     <div>
     <el-form label-width="100px" style="max-width: 460px;position: relative;margin: auto;">
-      <el-form-item label="账号" >
-        <el-input type="tel" v-model="loginUsername" placeholder="请输入账号" required/>
+      <el-form-item label="账号">
+        <el-input type="tel" v-model="loginUsername" placeholder="请输入账号" required id="login-username"/>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input type="password" show-password v-model="loginPassword" placeholder="请输入密码" required/>
+        <el-input type="password" show-password v-model="loginPassword" placeholder="请输入密码" required id="login-password"/>
       </el-form-item>
+      <p id="login-welcome-message" style="text-align: center;"> {{ welcomeMessage.valueOf() }} </p>
       <div class="submit-button" style="max-width: 120px;margin: auto;">
-        <el-button type="default" round="true" :icon="Pointer" @click="login_id">提交</el-button>
+        <el-button type="default" round="true" :icon="Pointer" @click="login_id" id="login-submit">提交</el-button>
       </div>
     </el-form>
     </div>
@@ -31,15 +32,17 @@ import { useRouter } from 'vue-router';
   const router = useRouter();
   //const router=useRouter()
   const user_id = ref();
+  const welcomeMessage=ref('请输入登录信息');
 
 
   const login_id = async ()=> {
           axios.get('http://localhost:8084/api/user/login?USERNAME='+loginUsername.value+'&PASSWORD='+loginPassword.value)
           .then(response => {
             // console.log('Request URL:', response.config.baseURL + response.config.url);
+            welcomeMessage.value = "登录成功";
             console.log("username",loginUsername.value);
             console.log(response.data);
-            if(response.data.message==='该用户已经被封禁') {
+            if(response.data.accountStatus == 0) {
                 console.log('blocked.');
                 sessionStorage.setItem("user_id",response.data.user_ID );
                 router.push({
@@ -112,6 +115,7 @@ import { useRouter } from 'vue-router';
               }
           })
           .catch((error) => {
+              welcomeMessage.value = "用户名或密码错误";
               console.log('An error occurred:', error);
           });
       };

@@ -352,14 +352,11 @@ public class ProfileServiceImpl implements ProfileService {
 
         if (user == null) {
             throw new OrderException("user not found");
-        }
-        else if (user.getRole() == 2) {
+        } else if (user.getRole() == 2) {
             throw new OrderException("cannot prohibit admin");
-        }
-        else if (ifProhibited && user.getAccountStatus() != 1) {
+        } else if (ifProhibited && user.getAccountStatus() != 1) {
             throw new OrderException("prohibiting abnormal user");
-        }
-        else if (!ifProhibited && user.getAccountStatus() != 0) {
+        } else if (!ifProhibited && user.getAccountStatus() != 0) {
             throw new OrderException("unbanning normal user");
         }
 

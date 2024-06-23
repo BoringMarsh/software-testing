@@ -251,7 +251,7 @@ const getGoodsList=async()=>{
   //   tot.value=response.data;
   // });
   // 获取某社团活动
-  axios.post('/api/society/activity/activities', {
+  axios.post('http://localhost:8084/api/society/activity/activities', {
         socId: soc_id.value,
         status: status.value,
         order: order.value,

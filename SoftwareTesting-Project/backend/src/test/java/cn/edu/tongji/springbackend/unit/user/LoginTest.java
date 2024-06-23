@@ -11,6 +11,7 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,6 +78,11 @@ public class LoginTest {
         return suite;
     }
 
+    @Test
+    public void aaaTest() {
+        System.out.println("hello");
+    }
+
     @ParameterizedTest
     @MethodSource("provideLoginTestCases")
     @Description("""
@@ -109,6 +115,7 @@ public class LoginTest {
         updateBlock(data, executed, COLUMN_ACTUAL_OUTPUT, actualOutput);
         updateBlock(data, executed, COLUMN_TIME, LocalDateTime.now().format(getFormatter()));
         updateBlock(data, executed, COLUMN_PERSON, TEST_PERSON);
+        updateBlock(data, executed, COLUMN_RESULT, result ? "通过测试" : "未通过测试");
 
         //若执行到最后一行，将填入后的数据写入结果csv文件
         if (executed == total - 1)
@@ -116,12 +123,8 @@ public class LoginTest {
         else
             executed++;
 
-        //根据比对结果填入测试结果，以及若不通过则直接抛出未通过异常，给后续报告捕获该信息
-        if (result) {
-            updateBlock(data, executed, COLUMN_RESULT, "通过测试");
-        } else {
-            updateBlock(data, executed, COLUMN_RESULT, "未通过测试");
+        //若不通过则直接抛出未通过异常，给后续报告捕获该信息
+        if (!result)
             throw new TestException(executed, line[COLUMN_EXPECTED_OUTPUT], actualOutput);
-        }
     }
 }

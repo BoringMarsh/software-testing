@@ -11,7 +11,7 @@
     <el-header height="70px">
       <div>
         <img src="" alt="" />
-        <span>管理员系统：{{ account }}</span>
+        <span id="admin-home-title">管理员系统：{{ account }}</span>
       </div>
       <!-- <el-button type="info"  @click="dialogVisible = true">发布公告</el-button> -->
       <el-button type="info"  @click="logout">退出登录</el-button>

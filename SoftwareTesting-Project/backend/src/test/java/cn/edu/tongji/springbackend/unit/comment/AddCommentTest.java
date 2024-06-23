@@ -134,30 +134,20 @@ public class AddCommentTest {
         //比对预期输出和实际输出
         boolean result = Objects.equals(actualOutput, line[COLUMN_EXPECTED_OUTPUT]);
 
-        //填入实际输出、测试时间和测试人员
+        //填入实际输出、测试时间、测试人员以及比对结果
         updateBlock(data, executed, COLUMN_ACTUAL_OUTPUT, actualOutput);
         updateBlock(data, executed, COLUMN_TIME, LocalDateTime.now().format(getFormatter()));
         updateBlock(data, executed, COLUMN_PERSON, TEST_PERSON);
-
-        //根据比对结果填入测试结果，以及若不通过则直接抛出未通过异常，给后续报告捕获该信息
-        if (result) {
-            updateBlock(data, executed, COLUMN_RESULT, "通过测试");
-        } else {
-            updateBlock(data, executed, COLUMN_RESULT, "未通过测试");
-
-            //若执行到最后一行，将填入后的数据写入结果csv文件
-            if (executed == total - 1)
-                writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
-            else
-                executed++;
-
-            throw new TestException(executed, line[COLUMN_EXPECTED_OUTPUT], actualOutput);
-        }
+        updateBlock(data, executed, COLUMN_RESULT, result ? "通过测试" : "未通过测试");
 
         //若执行到最后一行，将填入后的数据写入结果csv文件
         if (executed == total - 1)
             writeCsv(TC_PATH_UNIT_COMMENT + '/' + TEST_CASE_RESULT_FILENAME, data);
         else
             executed++;
+
+        //若不通过则直接抛出未通过异常，给后续报告捕获该信息
+        if (!result)
+            throw new TestException(executed, line[COLUMN_EXPECTED_OUTPUT], actualOutput);
     }
 }

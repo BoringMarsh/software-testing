@@ -14,41 +14,41 @@
   
         <!-- ...其他表单项内容保持不变... -->
         <el-form-item label="学号" prop="username" required>
-          <el-input v-model="form.username"></el-input>
+          <el-input id="student-reg-username" v-model="form.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="user_password" required>
-          <el-input type="password" v-model="form.user_password"></el-input>
+          <el-input id="student-reg-password" type="password" v-model="form.user_password"></el-input>
         </el-form-item>
         <el-form-item label="确认密码" prop="confirm_password" :validate-status="confirmStatus" :error="confirmError">
-          <el-input type="password" v-model="form.confirm_password" @blur="validateConfirm"></el-input>
+          <el-input id="student-reg-confirm-password" type="password" v-model="form.confirm_password" @blur="validateConfirm"></el-input>
         </el-form-item>
         <el-form-item label="电子邮箱" prop="user_email" :validate-status="emailStatus" :error="emailError">
-          <el-input v-model="form.user_email" @blur="validateEmail"></el-input>
+          <el-input id="student-reg-email" v-model="form.user_email" @blur="validateEmail"></el-input>
         </el-form-item>
         <el-form-item label="电话号码" prop="user_phone" :validate-status="phoneStatus" :error="phoneError">
-          <el-input v-model="form.user_phone" @blur="validatePhone"></el-input>
+          <el-input id="student-reg-phone" v-model="form.user_phone" @blur="validatePhone"></el-input>
         </el-form-item>
         <el-form-item label="校区" prop="user_campus">
-          <el-select v-model="form.user_campus" placeholder="请选择校区">
+          <el-select id="student-reg-campus" v-model="form.user_campus" placeholder="请选择校区">
             <!-- 遍历校区选项，options 是一个数组，包含每个校区的信息 -->
             <el-option v-for="option in campusOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="支付密码" prop="pay_password" required>
-          <el-input type="password" v-model="form.pay_password"></el-input>
+          <el-input id="student-reg-pay-password" type="password" v-model="form.pay_password"></el-input>
         </el-form-item>
         <el-form-item label="真实姓名" prop="stu_name">
-          <el-input v-model="form.stu_name"></el-input>
+          <el-input id="student-reg-name" v-model="form.stu_name"></el-input>
         </el-form-item>   
         <el-form-item label="所在年级" prop="stu_year">
-          <el-select v-model="form.stu_year" placeholder="请选择年级">
+          <el-select id="student-reg-year" v-model="form.stu_year" placeholder="请选择年级">
             <!-- 遍历年级选项，options 是一个数组，包含每个年级的信息 -->
             <el-option v-for="option in yearOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>   
         <!-- 学院选择 -->
         <el-form-item label="所在学院" prop="stu_school">
-          <el-select v-model="form.stu_school" placeholder="请选择所在学院" @change="loadMajors">
+          <el-select id="student-reg-school" v-model="form.stu_school" placeholder="请选择所在学院" @change="loadMajors">
             <el-option
               v-for="school in schoolOptions"
               :key="school.value"
@@ -60,7 +60,7 @@
 
         <!-- 专业选择 -->
         <el-form-item label="所在专业" prop="stu_major">
-          <el-select v-model="form.stu_major" placeholder="请选择所在专业">
+          <el-select id="student-reg-major" v-model="form.stu_major" placeholder="请选择所在专业">
             <el-option
               v-for="major in majorOptions"
               :key="major"
@@ -70,7 +70,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="个人备注" prop="stu_notes">
-          <el-input type="textarea" v-model="form.stu_notes" style="width: 100%;" rows="2"></el-input>
+          <el-input id="student-reg-notes" type="textarea" v-model="form.stu_notes" style="width: 100%;" rows="2"></el-input>
         </el-form-item>
         <el-form-item>
           <p>请选择个人喜好关键词</p>
@@ -105,12 +105,12 @@
     confirm_password: '',
     user_email: '',       // Add user_email
     user_phone: '',       // Add user_phone
-    user_campus: '',      // Add user_campus
+    user_campus: '嘉定校区',      // Add user_campus
     pay_password: '',     // Add pay_password
     stu_name: '',         // Add stu_name
-    stu_year: '',         // Add stu_year
-    stu_school: '',       // Add stu_school
-    stu_major: '',        // Add stu_major
+    stu_year: '2021本',         // Add stu_year
+    stu_school: '软件学院',       // Add stu_school
+    stu_major: '软件工程',        // Add stu_major
     stu_notes: '',        // Add stu_notes
     stu_keyword: [],      // Add stu_keyword as an array
   });

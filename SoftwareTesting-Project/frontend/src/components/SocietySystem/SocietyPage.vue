@@ -30,7 +30,7 @@
     <el-header height="80px">
       <div>
         <img src="Logo.png" alt="" style="width: 150px; padding-right: 10px;"/>
-        <span>社团系统</span>
+        <span id="society-home-title">社团系统</span>
       </div>
       <!-- <el-button type="info"  @click="dialogVisible = true">发布公告</el-button> -->
       <el-button type="danger" style="background-color:rgb(222, 214, 187);"  @click="logout">退出登录</el-button>

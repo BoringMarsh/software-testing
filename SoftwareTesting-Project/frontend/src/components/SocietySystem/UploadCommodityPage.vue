@@ -48,36 +48,62 @@
   const socId = sessionStorage.getItem('socId') as string;
 
   const submitForm = () => {
-    console.log('vFormRef',vFormRef)
-    vFormRef.value.getFormData().then(async formData => {
-      console.log('formData',formData);
-      formData.socId = socId;
-      formData.base64ActImages = [];
-      for (let fileObj of fileList_pic.value) {
-        if (fileObj.raw) {
-          formData.base64ActImages.push(await toBase64(fileObj));
-        }
-      }
-      //console.log("为了传商品基本信息获取IMAGE_KEY"+localStorage.getItem('IMAGE_KEY'));
-      
-      //delete formData.com_image_upload;
-      //formData.IMAGE_KEY = localStorage.getItem('IMAGE_KEY');
-      console.log("往后端传活动Json"+JSON.stringify(formData));
-      const response = await axios.post("/api/society/activity/upload",JSON.stringify(formData),
-      { headers: {'Content-Type': 'application/json'} } );
-      console.log("活动上传成功后获得ID",response.data);
-      
-      ElMessage({
-        showClose: true,
-        message: '上传成功！您的活动ID：'+response.data.actId,
-        type: 'success',
-      })
-      //location.reload();
-    }).catch(error => {
-      // Form Validation failed
-      ElMessage.error(error)
+    var formData = {
+      socId: socId,
+      base64ActImages: [],
+      actName: "嘉定万步走",
+      actIntro: "嘉定校区体育主题活动，请所有选择体育课的同学踊跃参加",
+      actLocation: "嘉定校区校园步道",
+      ticketPrice: 100.0,
+      regStartTime: "2024-06-23 17:30:00",
+      regEndTime: "2024-06-25 09:30:00",
+      actTime: "2024-07-01 14:30:00",
+      actCapacity: 10000,
+      keyword: [],
+    }
 
-    })
+    axios.post("http://localhost:8084/api/society/activity/upload", formData);
+    // console.log('vFormRef',vFormRef)
+    
+    // vFormRef.value.getFormData().then(async formData => {
+    //   console.log('formData',formData);
+    //   formData.socId = socId;
+    //   formData.base64ActImages = [];
+    //   formData.actName = "嘉定万步走";
+    //   formData.actIntro = "嘉定校区体育主题活动，请所有选择体育课的同学踊跃参加";
+    //   formData.actLocation = "嘉定校区校园步道";
+    //   formData.ticketPrice = 100.0;
+    //   formData.regStartTime = "2024-06-23 17:30:00";
+    //   formData.regEndTime = "2024-06-25 09:30:00";
+    //   formData.actTime = "2024-07-01 14:30:00";
+    //   formData.actCapacity = 10000;
+    //   formData.keyword = [];
+
+    //   for (let fileObj of fileList_pic.value) {
+    //     if (fileObj.raw) {
+    //       formData.base64ActImages.push(await toBase64(fileObj));
+    //     }
+    //   }
+    //   //console.log("为了传商品基本信息获取IMAGE_KEY"+localStorage.getItem('IMAGE_KEY'));
+      
+    //   //delete formData.com_image_upload;
+    //   //formData.IMAGE_KEY = localStorage.getItem('IMAGE_KEY');
+    //   console.log("往后端传活动Json"+JSON.stringify(formData));
+    //   const response = await axios.post("/api/society/activity/upload",JSON.stringify(formData),
+    //   { headers: {'Content-Type': 'application/json'} } );
+    //   console.log("活动上传成功后获得ID",response.data);
+      
+    //   ElMessage({
+    //     showClose: true,
+    //     message: '上传成功！您的活动ID：'+response.data.actId,
+    //     type: 'success',
+    //   })
+    //   //location.reload();
+    // }).catch(error => {
+    //   // Form Validation failed
+    //   ElMessage.error(error)
+
+    // })
   }
 
   const getKeywordsRemote = (query) => {

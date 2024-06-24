@@ -158,11 +158,10 @@ def hw_computer():
 from flask import Flask, request, jsonify
 import subprocess
 import os
-
-
-
+process = None
 @app.route('/api/execute_command', methods=['POST'])
 def execute_command():
+    global process
     data = request.get_json()
     relative_folder_path = data.get('relative_folder_path')
     command = data.get('command')
@@ -183,16 +182,24 @@ def execute_command():
     try:
         # 设置工作目录
         os.chdir(target_folder_path)
-        # 执行命令
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-        # 返回命令执行结果
-        return jsonify({
-            'message': 'Command executed successfully',
-            'stdout': result.stdout,
-            'stderr': result.stderr
-        }), 200
+        # 执行命令，并存储子进程对象
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        # 返回命令执行开始的信息
+        return jsonify({'message': 'Command started'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/stop_command', methods=['POST'])
+def stop_command():
+    global process
+    if process and process.poll() is None:
+        # 如果子进程正在运行，则杀死它
+        process.terminate()
+        process.wait() 
+        return jsonify({'message': 'Command stopped'}), 200
+    else:
+        return jsonify({'error': 'No running command to stop'}), 400
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

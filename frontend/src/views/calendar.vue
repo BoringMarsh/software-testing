@@ -1,5 +1,6 @@
 <template>
-    <div id="myChart123" :style="{width: '1500px', height: '350px'}"></div>
+    <div id="myChart0" :style="{width: '1000px', height: '350px'}"></div>
+    <div id="myChart1" :style="{width: '1000px', height: '350px'}"></div>
   <div style="margin-left: 50px;margin-right:50px;text-align: left;width: 100%;">
     <div style="width: 250px;">
       <h1>Question4: 万年历问题</h1>
@@ -87,7 +88,8 @@ export default {
       });
       this.showData = [];
       console.log(file, fileList);
-      this.updateChart();
+      this.updatelineChart();
+      this.updatepieChart();
     },
     handlePreview(file) {
       this.$nextTick(() => {
@@ -97,7 +99,8 @@ export default {
           console.log(this.showData)
         }
         console.log(this.passes[this.index]);
-        this.updateChart();
+        this.updatelineChart();
+        this.updatepieChart();
       });
     },
     handleExceed(files, fileList) {
@@ -115,11 +118,12 @@ export default {
       this.testtime.push(response.testTime);
       this.readtime.push(response.readTime);
       this.passes.push(response.passRate);      
-      this.updateChart();
+      this.updatelineChart();
+      this.updatepieChart();
 
     },
-    updateChart() {
-      let myChart = echarts.init(document.getElementById("myChart123"));
+    updatelineChart() {
+      let myChart = echarts.init(document.getElementById("myChart0"));
       let option = {
         tooltip: {
           trigger: 'axis'
@@ -155,6 +159,29 @@ export default {
             type: 'line',
             data: this.readtime
           },
+        ]
+      };
+      myChart.setOption(option);
+    },
+    updatepieChart() {
+      let myChart = echarts.init(document.getElementById("myChart1"));
+      let option = {
+        tooltip: {
+          trigger: 'axis'
+        },
+        legend: {
+          data: ['通过率', '不通过率']
+        },
+        toolbox: {
+          feature: {
+            saveAsImage: {},
+            dataView: {},
+            magicType: {
+              type: ['line', 'bar', 'stack', 'tiled', 'pie']
+            }
+          }
+        },
+        series: [
           {
             name: '通过率',
             type: 'pie',
@@ -178,10 +205,11 @@ export default {
         ]
       };
       myChart.setOption(option);
-    }
+    },
   },
   mounted() {
-    this.updateChart();
+    this.updatelineChart();
+    this.updatepieChart();
   }
 };
 </script>

@@ -161,34 +161,38 @@ import os
 
 
 
-@app.route('/api/run_command', methods=['POST'])
-def run_command():
-    # 从请求中获取目录和命令
+@app.route('/api/execute_command', methods=['POST'])
+def execute_command():
     data = request.get_json()
-    directory = data.get('directory')
+    relative_folder_path = data.get('relative_folder_path')
     command = data.get('command')
 
-    # 检查目录和命令是否提供
-    if not directory or not command:
-        return jsonify({'error': '目录和命令必须提供'}), 400
+    # 安全性检查和验证
+    if not relative_folder_path or not command:
+        return jsonify({'error': 'Invalid parameters'}), 400
 
-    # 执行命令并获取输出
+    # 构建文件路径
+    base_dir = os.path.dirname(os.getcwd())  # 获取当前工作目录的上一级目录
+    target_folder_path = os.path.join(base_dir, relative_folder_path)
+
+    # 检查目标文件夹是否存在
+    if not os.path.exists(target_folder_path):
+        return jsonify({'error': 'Target folder not found'}), 404
+
+    # 执行命令
     try:
-        output, error = run_command_in_directory(command, directory)
-        if error:
-            return jsonify({'error': error}), 500
-        return jsonify({'output': output})
+        # 设置工作目录
+        os.chdir(target_folder_path)
+        # 执行命令
+        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        # 返回命令执行结果
+        return jsonify({
+            'message': 'Command executed successfully',
+            'stdout': result.stdout,
+            'stderr': result.stderr
+        }), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-def run_command_in_directory(command, directory):
-    """
-    在指定目录下运行命令，并返回命令的输出和错误信息。
-    """
-    os.chdir(directory)
-    process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    output, error = process.communicate()
-    return output.decode('gbk').strip(), error.decode('gbk').strip()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

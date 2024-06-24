@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="runSelenium">运行Selenium</button>
+    <button @click="executeCommand">执行命令</button>
   </div>
 </template>
 
@@ -8,25 +8,24 @@
 import axios from 'axios';
 
 export default {
-  name: 'CommandButton',
+  name: 'CommandExecutor',
+
   methods: {
-    runSelenium() {
-      axios.post('http://localhost:5001/api/run_command', {
-        directory: 'D:\\software\\software-testing\\SoftwareTesting-Project\\frontend',
-        command: 'selenium-side-runner JiTicket.side'
+    executeCommand() {
+      const relativeFolderPath = 'SoftwareTesting-Project\\frontend';
+      const command = 'selenium-side-runner JiTicket.side';
+
+      axios.post('http://localhost:5001/api/execute_command', {
+        relative_folder_path: relativeFolderPath,
+        command: command
       })
       .then(response => {
-        if (response.data.output) {
-          console.log(response.data.output);
-        }
-        if (response.data.error) {
-          console.error(response.data.error);
-        }
+        console.log(response.data);
       })
       .catch(error => {
         console.error(error);
       });
     }
   }
-};
+}
 </script>

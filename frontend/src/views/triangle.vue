@@ -1,5 +1,5 @@
 <template>
-   <button @click="test()">测试按钮</button>
+    <div id="myChart123" :style="{width: '1500px', height: '350px'}"></div>
  <div class='container'>
    <el-container style="width: 100%; height: 500px">
     <h1 style="font-size:18px" class="header">Question1:判断三角形类型</h1>
@@ -83,29 +83,15 @@
     </div>
     </el-footer>
    </el-container>
-   <div id="myChart123" :style="{width: '1500px', height: '350px'}"></div>
+
  </div>
 
 </template>
 <script>
-import { ElUpload, ElButton, ElTable, ElTableColumn, ElForm, ElFormItem, ElFooter, ElContainer, ElTabs, ElTabPane, ElInput } from 'element-plus';
-import axios from 'axios';
+
 import * as echarts from 'echarts';
 export default {
   name: "trianGle",
-  components: {
-    "el-upload": ElUpload,
-    "el-button": ElButton,
-    "el-table": ElTable,
-    "el-table-column": ElTableColumn,
-    "el-form": ElForm,
-    "el-form-item": ElFormItem,
-    "el-footer": ElFooter,
-    "el-container": ElContainer,
-    "el-tabs": ElTabs,
-    "el-tab-pane": ElTabPane,
-    "el-input": ElInput
-  },
   data() {
     return {
       uploadActionUrl:'',

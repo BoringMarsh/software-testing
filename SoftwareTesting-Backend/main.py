@@ -11,6 +11,8 @@ from hw_telephone import telephone
 from hw_computer import computer
 from http import HTTPStatus
 import subprocess
+import os
+
 # Flask应用创建
 app = Flask(__name__)
 
@@ -27,7 +29,7 @@ def make_response(read_time: float, test_time: float, total_count: int, pass_cou
         "testTime": test_time,
         "total": total_count,
         "pass": pass_count,
-        "passRate": float(pass_count) / total_count ,
+        "passRate": float(pass_count) / total_count,
         "data": ast.literal_eval(df.to_json(orient='records'))
     })
 
@@ -155,13 +157,11 @@ def hw_telephone():
 def hw_computer():
     file = request.files['file']
     return test_procedure(file.filename, 'computer', 3)
-from flask import Flask, request, jsonify
-import subprocess
-import os
-process = None
-@app.route('/api/execute_command', methods=['POST'])
-def execute_command():
-    global process
+
+
+@app.route('/api/run_command', methods=['POST'])
+def run_command():
+    # 从请求中获取目录和命令
     data = request.get_json()
     relative_folder_path = data.get('relative_folder_path')
     command = data.get('command')
@@ -189,16 +189,26 @@ def execute_command():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/stop_command', methods=['POST'])
-def stop_command():
-    global process
-    if process and process.poll() is None:
-        # 如果子进程正在运行，则杀死它
-        process.terminate()
-        process.wait() 
-        return jsonify({'message': 'Command stopped'}), 200
-    else:
-        return jsonify({'error': 'No running command to stop'}), 400
+
+def run_command_in_directory(command, directory):
+    """
+    在指定目录下运行命令，并返回命令的输出和错误信息。
+    """
+    os.chdir(directory)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output, error = process.communicate()
+    return output.decode('gbk').strip(), error.decode('gbk').strip()
+
+
+@app.route('/api/project/unit', methods=['GET'])
+def unit_test():
+    try:
+        output, error = run_command_in_directory("D:\\git-repositories\\software-testing\\SoftwareTesting-Project\\backend\\test-overall.cmd", "D:\\git-repositories\\software-testing\\SoftwareTesting-Project\\backend\\")
+        if error:
+            return jsonify({'error': error}), 500
+        return jsonify({'output': output})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

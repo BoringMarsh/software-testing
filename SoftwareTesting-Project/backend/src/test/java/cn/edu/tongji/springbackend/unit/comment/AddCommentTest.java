@@ -115,7 +115,7 @@ public class AddCommentTest {
 
         //调取测试方法，获取实际输出
         try {
-            communicateService.addComment(new AddCommentRequest(
+            communicateService.addCommentD1(new AddCommentRequest(
                     testCase.getCmtContent(),
                     LocalDateTime.parse(testCase.getCmtTime(), getFormatter()),
                     Integer.valueOf(testCase.getActId()),

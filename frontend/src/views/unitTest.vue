@@ -3,19 +3,9 @@
     <div style="width: 250px;">
       <h1>单元测试</h1>
       <div class="select">
-        <el-select v-model="selectItem" placeholder="请选择" @change="changeSelect">
-          <el-option
-            v-for="item in options"
-            :key="item"
-            :label="item"
-            :value="item">
-          </el-option>
-        </el-select>
-        <el-select v-model="selectSubItem" placeholder="请选择" :style="{display: ifUserDisplay}">
-          <el-option>
-          </el-option>
-        </el-select>
+        <button @click="execUnitTest"> 执行 </button>
       </div>
+      <allure-report></allure-report>
       <div>
         <input type="file" name="fileDemo" id="fileDemo" multep/>
         <input type="button" value="readAsText"  id="readAsText" @click="showDataByText"/>
@@ -25,13 +15,15 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { ElSelect, ElOption } from 'element-plus';
 
 export default {
   name: "unitTest",
   components: {
     "el-select": ElSelect,
-    "el-option": ElOption
+    "el-option": ElOption,
+    "allure-report": AllureReport
   },
   data() {
     return {
@@ -68,6 +60,13 @@ export default {
       console.log(data)
       console.log(variables)
       };
+    },
+    execUnitTest() {
+      axios.get("http://localhost:5001/api/project/unit").then(res => {
+        console.log(res);
+      }, err => {
+        console.log(err);
+      });
     }
   }
 }

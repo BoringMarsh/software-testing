@@ -1,0 +1,12 @@
+ID,Year,Month,Day,ExpectOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
+1,2024,5,15,2024/5/16,,,弱一般等价类,,,
+2,-1,5,15,year is lower than 2000,,,弱健壮等价类,,,
+3,2024,13,15,month exceeded,,,弱健壮等价类,,,
+4,2024,5,32,day exceeded,,,弱健壮等价类,,,
+5,20,5,1,year is lower than 2000,,,弱健壮等价类,,,
+6,2023,3,1,2023/3/2,,,弱健壮等价类,,,
+7,2023,4,1,2023/4/2,,,弱健壮等价类,,,
+8,2024,2,29,2024/3/1,,,弱一般等价类,,,
+9,2023,2,29,day exceeded,,,弱一般等价类,,,
+10,1899,12,31,year is lower than 2000,,,弱一般等价类,,,
+11,2101,5,13,year exceeded,,,弱一般等价类,,,

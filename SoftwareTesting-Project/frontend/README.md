@@ -1,5 +1,10 @@
+# frontend
+这里是被测项目：济票坊——校园社团活动票务平台的前端
 
-# main0807
+## Selenium自动化测试脚本
+JiTicket.side
+1. 使用chrome插件Selenium IDE打开
+2. npm install selenium-side-runner后运行指令："selenium-side-runner JiTicket.side"
 
 ## Project setup
 ```

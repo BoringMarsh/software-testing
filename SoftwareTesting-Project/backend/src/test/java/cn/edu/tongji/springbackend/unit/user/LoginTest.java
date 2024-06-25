@@ -78,11 +78,6 @@ public class LoginTest {
         return suite;
     }
 
-    @Test
-    public void aaaTest() {
-        System.out.println("hello");
-    }
-
     @ParameterizedTest
     @MethodSource("provideLoginTestCases")
     @Description("""

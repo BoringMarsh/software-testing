@@ -2,7 +2,7 @@
   "id": "fd77d423-6662-4472-ad4d-f053e9ad63eb",
   "version": "2.0",
   "name": "JiTicket",
-  "url": "http://43.142.102.35/",
+  "url": "http://localhost:8080/",
   "tests": [{
     "id": "4ed27d86-3a1a-448d-a4bb-def71a2bae1e",
     "name": "JiTicket_Sys_Test_case_fun_001",
@@ -345,6 +345,13 @@
       ],
       "value": "18277118094"
     }, {
+      "id": "571eab52-99ee-4bfd-8157-14fa5e3418c3",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-campus",
+      "targets": [],
+      "value": "嘉定校区"
+    }, {
       "id": "6ae9b122-d4a4-4e51-8e68-3c1d0d6f4831",
       "comment": "",
       "command": "type",
@@ -370,6 +377,27 @@
         ["xpath=//input", "xpath:position"]
       ],
       "value": "张三"
+    }, {
+      "id": "d725c2c4-8fe1-4d24-9f39-3d9ee46fd356",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-year",
+      "targets": [],
+      "value": "2021本"
+    }, {
+      "id": "146de5ca-d965-44ae-97a4-340687dd6610",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-school",
+      "targets": [],
+      "value": "软件学院"
+    }, {
+      "id": "e9bef4c7-12d2-416d-8560-65909ad09922",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-major",
+      "targets": [],
+      "value": "软件工程"
     }, {
       "id": "21c31a8e-3bd1-4a7c-9b50-c2ab9a2c6b20",
       "comment": "",
@@ -636,6 +664,13 @@
       ],
       "value": "2000"
     }, {
+      "id": "4d17f56e-0f97-4b2e-8176-294e50fd941e",
+      "comment": "",
+      "command": "pause",
+      "target": "",
+      "targets": [],
+      "value": "1000"
+    }, {
       "id": "614aa195-6f8a-4739-bf72-9891ab1d60de",
       "comment": "",
       "command": "type",
@@ -701,6 +736,13 @@
       ],
       "value": "18277118094"
     }, {
+      "id": "5faedb48-850b-48e8-b58f-6e7b906b1efd",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-campus",
+      "targets": [],
+      "value": "嘉定校区"
+    }, {
       "id": "849f5f53-8e5f-4280-a6ea-d04404917429",
       "comment": "",
       "command": "type",
@@ -726,6 +768,27 @@
         ["xpath=//input", "xpath:position"]
       ],
       "value": "李四"
+    }, {
+      "id": "3d12db97-b83b-46a7-845e-4d8f05a05e4e",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-year",
+      "targets": [],
+      "value": "2021本"
+    }, {
+      "id": "3672648b-db60-42b5-9b31-a0d548720656",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-school",
+      "targets": [],
+      "value": "软件学院"
+    }, {
+      "id": "98a07737-ab69-4f9d-8278-98e7ddb1633e",
+      "comment": "",
+      "command": "type",
+      "target": "id=student-reg-major",
+      "targets": [],
+      "value": "软件工程"
     }, {
       "id": "bc7f546a-e5cb-4837-8fb1-5857ed843f41",
       "comment": "",
@@ -2353,6 +2416,6 @@
     "timeout": 30000,
     "tests": ["4ed27d86-3a1a-448d-a4bb-def71a2bae1e", "1e77660d-aa1b-44a1-896e-8e1ce9a2da97", "691c6fe8-1d3e-40a9-b68c-20ec05d039f3", "7d7c8b0c-383f-4b88-8c0f-1a7b1331dec0", "77775062-72d4-4134-a3ed-cb38caa5605e", "46496f45-0f23-4b20-a725-42f8cb476085", "69518545-4aa7-4562-a8dc-37f8b5db8d61", "fff6f567-8efe-4b0a-9b2c-5bbff610683f", "70cfae84-34fd-4d11-a223-2bb825baf7ca"]
   }],
-  "urls": ["http://43.142.102.35/"],
+  "urls": ["http://localhost:8080/"],
   "plugins": []
 }

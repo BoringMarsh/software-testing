@@ -84,7 +84,6 @@
     </div>
     </el-footer>
    </el-container>
-
  </div>
 
 </template>

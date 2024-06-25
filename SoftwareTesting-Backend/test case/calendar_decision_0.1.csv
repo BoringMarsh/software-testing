@@ -1,0 +1,11 @@
+ID,Year,Month,Day,ExpectOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
+1,2024,2,29,2024/3/1,,,决策表法,,,
+2,2023,1,31,2023/2/1,,,决策表法,,,
+3,2024,2,30,day exceeded,,,决策表法,,,
+4,2023,2,29,day exceeded,,,决策表法,,,
+5,2024,4,31,day exceeded,,,决策表法,,,
+6,2024,13,2,month exceeded,,,决策表法,,,
+7,-1,1,30,year is lower than 2000,,,决策表法,,,
+8,2023,1,-1,day is lower than 1,,,决策表法,,,
+9,2100,12,31,2101/1/1,,,决策表法,,,
+10,1899,12,31,year is lower than 2000,,,决策表法,,,

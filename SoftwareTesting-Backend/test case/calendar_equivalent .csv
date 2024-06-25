@@ -1,0 +1,12 @@
+ID,Year,Month,Day,ExpectedOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
+1,2024,5,15,2024/5/15,弱一般等价类,,,,,
+2,-1,5,15,Illegal years,弱健壮等价类,,,,,
+3,2024,13,15,Illegal months,弱健壮等价类,,,,,
+4,2024,5,32,Illegal days,弱健壮等价类,,,,,
+5,aa,5,1,Illegal years,弱健壮等价类,,,,,
+6,2023,xx,1,Illegal months,弱健壮等价类,,,,,
+7,2023,4,xx,Illegal days,弱健壮等价类,,,,,
+8,2024,2,29,2024/2/29,弱一般等价类,,,,,
+9,2023,2,29,Non-leap year illegal date,弱一般等价类,,,,,
+10,1899,12,31,Illegal years,弱一般等价类,,,,,
+11,2101,5,13,year is exceeded,弱一般等价类,,,,,

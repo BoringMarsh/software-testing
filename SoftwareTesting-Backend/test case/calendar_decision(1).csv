@@ -1,0 +1,11 @@
+ID,Year,Month,Day,ExpectOutput,ActualOutput,Result,Analysis Strategy,Time,Person,Defect Description
+1,2024,2,29,2024/2/29,,,决策表法,,,
+2,2023,1,31,2023/1/31,,,决策表法,,,
+3,2024,2,30,The date does not match the month,,,决策表法,,,
+4,2023,2,29,The date does not match the month,,,决策表法,,,
+5,2024,4,31,The date does not match the month,,,决策表法,,,
+6,2024,13,2,illegal month,,,决策表法,,,
+7,-1,1,30,illegal years,,,决策表法,,,
+8,2023,1,-1,illegal days,,,决策表法,,,
+9,2100,12,31,2100/12/31,,,决策表法,,,
+10,1899,12,31,illegal years,,,决策表法,,,
